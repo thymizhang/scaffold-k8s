@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!-- 所有子模块打包都使用该版本号，使用mvn versions:set -DnewVersion=版本号，统一更新版本 -->
+    <groupId>com.ylwq</groupId>
+    <artifactId>scaffold-k8s</artifactId>
+    <version>1.0.0</version>
+    <modules>
+        <module>scaffold-common</module>
+        <module>scaffold-service-user</module>
+        <module>scaffold-service-user-api</module>
+        <module>scaffold-service-company</module>
+        <module>scaffold-service-project</module>
+        <module>scaffold-service-company-api</module>
+        <module>scaffold-service-project-api</module>
+    </modules>
+
+    <packaging>pom</packaging>
+
+    <properties>
+        <!-- 项目编码 -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- jdk版本 -->
+        <java.version>11</java.version>
+        <!-- maven编译时编码，jdk版本 -->
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <!-- 打包时跳过test测试 -->
+        <skipTests>true</skipTests>
+    </properties>
+    <!-- 依赖管理,依赖版本控制，子模块使用依赖时无需提供版本号 -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- Springboot依赖 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>2.3.7.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- SpringCloud依赖 -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Hoxton.SR9</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- spring-cloud-alibaba依赖, 使用nacos、sentinel、seata时引入 -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>2.2.3.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- mysql数据库驱动 -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>8.0.22</version>
+            </dependency>
+            <!-- mysql数据库交互插件,使用mybatis-plus时,不要导入mybatis的依赖 -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>3.4.1</version>
+            </dependency>
+            <!-- 数据库中间件，读写分离, 分库分表 -->
+            <dependency>
+                <groupId>org.apache.shardingsphere</groupId>
+                <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
+                <version>4.1.1</version>
+            </dependency>
+            <!-- 结合sharding-jdbc，输出sql日志，测试时使用 -->
+            <dependency>
+                <groupId>p6spy</groupId>
+                <artifactId>p6spy</artifactId>
+                <version>3.9.1</version>
+            </dependency>
+            <!-- Redis客户端Lettuce的连接池 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-pool2</artifactId>
+                <version>2.9.0</version>
+            </dependency>
+            <!-- 国产工具类，啥都有 -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-core</artifactId>
+                <version>5.5.6</version>
+            </dependency>
+            <!-- 代码简化，常用：@Data @Slf4j -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.16</version>
+                <scope>provided</scope>
+            </dependency>
+            <!-- 在线文档生成 -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-ui</artifactId>
+                <version>1.5.0</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <!-- 公共依赖，所有子模块会继承这些依赖 -->
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+        </dependency>
+    </dependencies>
+    <!-- 打包、编译插件声明 -->
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <!-- 默认编译插件，这里引入的重点是声明版本 -->
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
+                </plugin>
+                <plugin>
+                    <!-- 打可执行包插件声明，包括jar、war等，微服务子模块必须要声明该插件 -->
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>2.3.7.RELEASE</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <!-- 打非可执行包插件声明（非必须，默认版本2.4.0），如接口、工具包，子模块不需要再添加该插件 -->
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.2.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <!--        <resources>
+                    <resource>
+                        <directory>src/main/resources/</directory>
+                        <includes>
+                            <include>/*.properties</include>
+                            <include>/*.yml</include>
+                        </includes>
+                    </resource>
+                </resources>-->
+    </build>
+</project>

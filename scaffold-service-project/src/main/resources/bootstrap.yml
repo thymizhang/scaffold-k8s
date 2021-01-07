@@ -1,0 +1,134 @@
+spring:
+  application:
+    name: service-project
+
+---
+
+server:
+  port: ${port:8084}
+
+---
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+
+---
+
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: nacos.gceasy.cc:8848
+        file-extension: yml  # 配置文件扩展名,根据prefix.file-extension找到nacos服务器中的配置(Data Id)
+        namespace: SCAFFOLD-DEV
+        group: SCAFFOLD
+      discovery:
+        server-addr: nacos.gceasy.cc:8848
+
+---
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #控制台输出sql信息
+    map-underscore-to-camel-case: true #驼峰映射规则,比如字段company_name,映射为对象属性就是companyName
+
+---
+
+springdoc:
+  api-docs:
+    enabled: true #开启在线文档
+    groups:
+      enabled: true #启用分组方式显示各个微服务的API文档
+    path: /docs #修改访问地址为：http://localhost:8084/docs/
+  swagger-ui:
+    path: docs.html #修改SwaggerUI访问地址为：http://localhost:8084/docs.html
+
+---
+
+spring:
+  redis:
+    database: 0
+    host: redis.gceasy.cc
+    port: 6379 #默认6379，可省略
+    timeout: 30000  # 连接超时时长（毫秒）
+    lettuce:
+      pool: # 注意: 使用连接池需要加入commons-pool2依赖
+        max-active: 1000  # 连接池最大连接数（使用负值表示没有限制）
+        max-idle: 10    # 连接池中的最大空闲连接
+        min-idle: 5     # 连接池中的最小空闲连接
+        max-wait: -1   # 连接池最大阻塞等待时间（使用负值表示没有限制）
+
+---
+
+spring:
+  rabbitmq:
+    host: rabbitmq.gceasy.cc
+    port: 5672
+    username: root
+    password: runhui802
+
+---
+
+spring:
+  shardingsphere: #分库分表 + 读写分离
+    datasource: #数据源配置
+      names: m0,s0,m1,s1,ms0,ms1
+      m0:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.p6spy.engine.spy.P6SpyDriver #com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:p6spy:mysql://mysqlmaster.gceasy.cc:3306/scaffold_project_0?useSSL=false&serverTimezone=Hongkong&useUnicode=true&characterEncoding=UTF-8
+        username: root
+        password: test2020
+      s0:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+        jdbc-url: jdbc:p6spy:mysql://mysqlslave.gceasy.cc:3306/scaffold_project_0?useSSL=false&serverTimezone=Hongkong&useUnicode=true&characterEncoding=UTF-8
+        username: readman
+        password: test2020
+      m1:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.p6spy.engine.spy.P6SpyDriver #com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:p6spy:mysql://mysqlmaster.gceasy.cc:3306/scaffold_project_1?useSSL=false&serverTimezone=Hongkong&useUnicode=true&characterEncoding=UTF-8
+        username: root
+        password: test2020
+      s1:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+        jdbc-url: jdbc:p6spy:mysql://mysqlslave.gceasy.cc:3306/scaffold_project_1?useSSL=false&serverTimezone=Hongkong&useUnicode=true&characterEncoding=UTF-8
+        username: readman
+        password: test2020
+    props: #开启SQL显示，默认false
+      sql:
+        show: true
+    sharding:
+      master-slave-rules: #读写分离配置
+        msy0:
+          master-data-source-name: m0
+          slave-data-source-names: s0
+        msy1:
+          master-data-source-name: m1
+          slave-data-source-names: s1
+      default-database-strategy: #分库策略
+        inline:
+          sharding-column: company_id #根据company_id字段分库
+          algorithm-expression: msy$->{company_id % 2} #company_id取模2，定位到不同的库
+      tables:
+        project_info:
+          actual-data-nodes: msy$->{0..1}.project_info
+          table-strategy: #project_info表分表策略
+            inline:
+              sharding-column: id
+              algorithm-expression: project_info #没有水平分表时，直接写表名
+          key-generator:
+            column: id
+            type: SNOWFLAKE #分片键值生成规则，雪花算法
+        project_budget:
+          actual-data-nodes: msy$->{0..1}.project_budget_$->{0..1} #配置数据节点表，这里对应project_budget_0和project_budget_1（需要手动创建）
+          table-strategy: #project_budget表分表策略
+            inline:
+              sharding-column: project_id #根据project_id字段分片
+              algorithm-expression: project_budget_$->{project_id % 2} #分片算法：project_id取模2，定位到不同的表
+          key-generator:
+            column: id #指定分片键
+            type: SNOWFLAKE #分片键值生成规则，雪花算法

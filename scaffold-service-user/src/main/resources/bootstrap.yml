@@ -1,0 +1,89 @@
+spring:
+  application:
+    name: service-user
+
+---
+
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: nacos.gceasy.cc:8848
+        #prefix: service-user #配置文件名, 如果不配置, 默认是spring.application.name
+        file-extension: yml  #配置文件扩展名,根据prefix.file-extension找到nacos服务器中的配置(Data Id)
+        namespace: SCAFFOLD-DEV
+        group: SCAFFOLD
+        #shared-configs: #共享配置集,出现相同的key时,[n]越大的配置优先级越高,或者是靠后的配置
+        extension-configs: #拓展配置集(优先级高于共享配置),出现相同的key时,[n]越大的配置优先级越高,或者是靠后的配置
+          - data-id: rpc.properties #服务调用地址配置
+            group: SCAFFOLD
+            refresh: true
+          - data-id: combo.properties #服务套餐信息
+            group: SCAFFOLD
+            refresh: true
+
+# 以下内容可以放到nacos配置中心
+---
+
+server:
+  port: ${port:8082}
+
+---
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+
+---
+
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: nacos.gceasy.cc:8848
+
+---
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #控制台输出sql信息
+    map-underscore-to-camel-case: true #驼峰映射规则,比如字段company_name,映射为对象属性就是companyName
+
+
+---
+
+spring:
+  shardingsphere: #sharding-jdbc多数据源读写分离配置
+    datasource:
+      names: master,slave1
+      master: #主数据源
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.p6spy.engine.spy.P6SpyDriver #com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:p6spy:mysql://mysqlmaster.gceasy.cc:3306/scaffold_user?useSSL=false&serverTimezone=Hongkong&useUnicode=true&characterEncoding=UTF-8
+        username: root
+        password: test2020
+      slave1: #从数据源
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+        jdbc-url: jdbc:p6spy:mysql://mysqlslave.gceasy.cc:3306/scaffold_user?useSSL=false&serverTimezone=Hongkong&useUnicode=true&characterEncoding=UTF-8
+        username: readman
+        password: test2020
+    masterslave: #读写分离配置
+      load-balance-algorithm-type: round_robin #用于配置从库负载均衡算法类型，可选值：ROUND_ROBIN(轮询)，RANDOM（随机）
+      name: masterslave #最终的数据源名称
+      master-data-source-name: master #主库数据源名称
+      slave-data-source-names: slave1 #从库数据源名称列表，多个逗号分隔
+    props:
+      sql: #开启SQL显示，默认false
+        show: true
+
+---
+
+springdoc:
+  api-docs:
+    enabled: true #开启在线文档
+    groups:
+      enabled: true #启用分组方式显示各个微服务的API文档
+    path: /docs #修改访问地址为：http://localhost:8083/docs/  默认地址：http://localhost:8083/v3/api-docs/
+  swagger-ui:
+    path: docs.html #修改SwaggerUI访问地址为：http://localhost:8083/docs.html  默认访问地址：http://localhost:8083/swagger-ui.html
