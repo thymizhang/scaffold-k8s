@@ -3,13 +3,11 @@
 
 ## 技术要点
 * 服务注册与发现、配置中心均采用Nacos，这里不作说明，请参考[官方文档](https://nacos.io/zh-cn/docs/what-is-nacos.html)  
-一、 微服务配置及配置读取；  
-二、 微服务对外接口定义原则；  
-三、 Json数据的null值替换；  
-四、 Mybatis-plus应用；  
-
-
-#### 一、微服务配置及配置读取
+一、 微服务配置及配置读取；
+二、 Json数据的null值替换；  
+三、 Mybatis-plus应用；  
+  
+### 一、微服务配置及配置读取
 1. spring-cloud微服务默认配置文件为`bootstrap.yml`或`bootstrap.properties`；
 2. bootstrap文件中至少要配置`spring.application.name`属性，指定服务名称；
 3. 如果使用nacos作为配置中心，数据库相关配置（mysql、mybatis、sharding-jdbc）必须配置在主文件中（以服务名称命名的文件），避免配置失效；
@@ -34,21 +32,13 @@
     System.out.println("读取的配置信息：" + content);
 ```
 
-#### 二、微服务对外接口定义原则
-* 重点：将前端访问接口与微服务之间访问的接口分开编写
-1. 前端访问接口定义：`xxxxController`；
-2. 服务间访问接口定义：`xxxxServiceController`，并实现接口：`xxxxRestApi`；
-3. 前端访问接口使用统一返回对象：`ResponseData`；
-4. 服务间访问接口使用数据传输对象`DTO`，不建议使用实体对象`Entity`；
-5. 服务调用接口使用统一命名规则：`xxxxFeign`，并继承接口`xxxxRestApi`；
-
-#### 三、Json数据的null值替换
+### 二、Json数据的null值替换
 * 为什么要替换null？
   > 将null替换为空字符串，有利于前端快速开发，不用再为频繁处理null值耗费时间
 1. 将Controller返回给前端Json数据中的null统一替换为空字符串，案例：[JsonConfig.java](src/main/java/com/ylwq/scaffold/service/user/config/JsonConfig.java)；
 2. 在手动Json格式转换过程中，将Json数据中的null统一替换为空字符串，案例：[JsonUtil.java](../scaffold-common/src/main/java/com/ylwq/scaffold/common/util/JsonUtil.java);
 
-#### 四、Mybatis-plus应用 [官方文档](https://mybatis.plus/guide/)
+### 三、Mybatis-plus应用 [官方文档](https://mybatis.plus/guide/)
 1. Mybatis-plus配置，案例：[MyBatisPlusConfig.java](src/main/java/com/ylwq/scaffold/service/user/config/MyBatisPlusConfig.java)；
 2. 实体对象与数据库表映射，案例：[UserInfo.java](src/main/java/com/ylwq/scaffold/service/user/entity/UserInfo.java)；
 3. 创建DAO，案例：[UserInfoMapper.java](src/main/java/com/ylwq/scaffold/service/user/dao/UserInfoMapper.java)；

@@ -2,11 +2,20 @@
 微服务：公司服务
 
 ## 技术要点  
-一、微服务接口及服务间调用；  
-二、在线文档配置，[springdoc-openapi](https://github.com/springdoc/springdoc-openapi) ；  
-三、文件上传与下载；  
+一、微服务对外接口定义原则；
+二、微服务接口及服务间调用；  
+三、在线文档配置，[springdoc-openapi](https://github.com/springdoc/springdoc-openapi) ；  
+四、文件上传与下载；  
 
-### 一、微服务接口及服务间调用
+### 一、微服务对外接口定义原则
+* 重点：将前端访问接口与微服务之间访问的接口分开编写
+1. 前端访问接口定义：`xxxxController`；
+2. 服务间访问接口定义：`xxxxServiceController`，并实现接口：`xxxxRestApi`；
+3. 前端访问接口使用统一返回对象：`ResponseData`；
+4. 服务间访问接口使用数据传输对象`DTO`，不建议使用实体对象`Entity`；
+5. 服务调用接口使用统一命名规则：`xxxxFeign`，并继承接口`xxxxRestApi`；
+
+### 二、微服务接口及服务间调用
 实现步骤：
 1. 在RestApi接口中定义`@RequestMapping`，这样在`RestController`（接口实现）和`RestFeign`（接口调用）中不需要再定义，可以提高开发效率；
 ```java
@@ -33,7 +42,7 @@ public class CompanyApplication {
 }
 ```
 
-### 二、在线文档配置
+### 三、在线文档配置
 * springdoc介绍 
   springdoc是api文档标准OpenApi的非官方实现，另一个是springfox。springdoc帮助使用者将swagger3集成到SpringBoot中，springdoc-openapi库支持：
   > OpenAPI 3  
