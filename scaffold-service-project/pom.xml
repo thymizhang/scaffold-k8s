@@ -23,20 +23,32 @@
             <artifactId>scaffold-service-project-api</artifactId>
             <version>1.0.0</version>
         </dependency>
-        <!-- 加入该依赖，防止启动报错误：Annotation @EnableCircuitBreaker found -->
+        <!-- spring-cloud2020版之后，需要引入该依赖才能支持bootstrap配置文件 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
         <!-- 服务注册与发现 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+            <!-- 由于feign使用了spring-cloud-loadbalancer作为负载均衡，这里要排除ribbon -->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- 配置中心 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+        <!-- spring-cloud2020版本后，openfeign负载均衡不再使用Ribbon而是使用spring-cloud-loadbalancer -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-loadbalancer</artifactId>
         </dependency>
         <!-- 服务间调用 -->
         <dependency>

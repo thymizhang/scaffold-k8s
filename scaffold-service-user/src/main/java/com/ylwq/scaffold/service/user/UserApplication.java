@@ -2,7 +2,8 @@ package com.ylwq.scaffold.service.user;
 
 import com.ylwq.scaffold.common.util.JvmUtil;
 import org.springframework.boot.SpringApplication;
-import org.springframework.cloud.client.SpringCloudApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * 用户服务
@@ -10,7 +11,7 @@ import org.springframework.cloud.client.SpringCloudApplication;
  * @Author thymi
  * @Date 2021/1/7
  */
-@SpringCloudApplication
+@SpringBootApplication
 public class UserApplication {
     public static void main(String[] args) {
         SpringApplication.run(UserApplication.class, args);

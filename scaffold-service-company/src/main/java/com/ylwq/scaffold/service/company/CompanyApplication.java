@@ -2,7 +2,7 @@ package com.ylwq.scaffold.service.company;
 
 import com.ylwq.scaffold.common.util.JvmUtil;
 import org.springframework.boot.SpringApplication;
-import org.springframework.cloud.client.SpringCloudApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
@@ -11,7 +11,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @Author thymi
  * @Date 2021/1/7
  */
-@SpringCloudApplication
+@SpringBootApplication
 @EnableFeignClients
 public class CompanyApplication {
     public static void main(String[] args) {
