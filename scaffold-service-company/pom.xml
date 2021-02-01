@@ -12,16 +12,34 @@
     <artifactId>scaffold-service-company</artifactId>
 
     <dependencies>
+        <!-- 项目公共依赖 -->
         <dependency>
             <groupId>com.ylwq</groupId>
             <artifactId>scaffold-common</artifactId>
             <version>1.0.0</version>
         </dependency>
-
+        <!-- 服务依赖：公司服务 -->
         <dependency>
             <groupId>com.ylwq</groupId>
             <artifactId>scaffold-service-company-api</artifactId>
             <version>1.0.0</version>
+        </dependency>
+        <!-- 服务依赖：项目服务 -->
+        <dependency>
+            <groupId>com.ylwq</groupId>
+            <artifactId>scaffold-service-project-api</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
         <!-- 需要调用用户服务接口 -->
         <dependency>

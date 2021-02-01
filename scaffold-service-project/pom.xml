@@ -12,16 +12,28 @@
     <artifactId>scaffold-service-project</artifactId>
 
     <dependencies>
+        <!-- 项目公共依赖 -->
         <dependency>
             <groupId>com.ylwq</groupId>
             <artifactId>scaffold-common</artifactId>
             <version>1.0.0</version>
         </dependency>
-
+        <!-- 服务依赖：项目服务 -->
         <dependency>
             <groupId>com.ylwq</groupId>
             <artifactId>scaffold-service-project-api</artifactId>
             <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
         <!-- spring-cloud2020版之后，需要引入该依赖才能支持bootstrap配置文件 -->
         <dependency>
@@ -59,6 +71,17 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+        <!-- redis访问 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <!-- 测试时使用 -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-core</artifactId>
+            <scope>test</scope>
         </dependency>
         <!-- *** 数据库相关 *** -->
         <dependency>

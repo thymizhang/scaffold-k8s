@@ -12,27 +12,12 @@
     <artifactId>scaffold-common</artifactId>
 
     <dependencies>
-        <!-- 使用lombok需要spring-boot环境，部分工具中使用了@Slf4j，同时微服务模块需要，提供Http协议接口 -->
+        <!-- RedisUtil需要用到  -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
         </dependency>
-        <!-- MyBatisPlusBaseConfig使用 -->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-        </dependency>
-        <!-- redis工具需要用到  -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-core</artifactId>
-        </dependency>
-
+        <!-- JsonUtil需要用到 -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
