@@ -16,6 +16,7 @@ public enum ResultEnums {
      */
     SUCCESS(String.valueOf(HttpStatus.OK.value()), "请求成功"),
     FAILD(String.valueOf(HttpStatus.BAD_REQUEST.value()), "请求失败"),
+    UNAUTHORIZED(String.valueOf(HttpStatus.UNAUTHORIZED.value()),"认证失败"),
     ERROR(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()), "系统异常");
 
     /**

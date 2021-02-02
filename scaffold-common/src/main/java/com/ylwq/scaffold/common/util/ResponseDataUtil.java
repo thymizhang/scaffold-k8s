@@ -52,6 +52,15 @@ public class ResponseDataUtil {
     }
 
     /**
+     * 返回默认认证失败信息
+     *
+     * @return {@link ResponseData ResponseData}
+     */
+    public static ResponseData buildUnAuthorized() {
+        return new ResponseData(ResultEnums.UNAUTHORIZED);
+    }
+
+    /**
      * 返回默认系统异常信息
      *
      * @return {@link ResponseData ResponseData}
