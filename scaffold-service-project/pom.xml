@@ -62,6 +62,11 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-loadbalancer</artifactId>
         </dependency>
+        <!-- spring-cloud2020版本后，使用spring-cloud-loadbalancer作为负载均衡，需要用到caffeine缓存 -->
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+        </dependency>
         <!-- 服务间调用 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

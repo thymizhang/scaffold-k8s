@@ -9,6 +9,7 @@ spring:
     nacos:
       config:
         server-addr: nacos.gceasy.cc:8848
+        prefix: ${spring.application.name}
         file-extension: yml  #配置文件扩展名,根据prefix.file-extension找到nacos服务器中的配置(Data Id)
         namespace: SCAFFOLD-DEV
         group: SCAFFOLD

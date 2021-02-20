@@ -65,6 +65,12 @@
                 <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
                 <version>2.2.5.RELEASE</version>
             </dependency>
+            <!-- spring-cloud2020版本后，使用spring-cloud-loadbalancer作为负载均衡，需要用到caffeine缓存 -->
+            <dependency>
+                <groupId>com.github.ben-manes.caffeine</groupId>
+                <artifactId>caffeine</artifactId>
+                <version>2.9.0</version>
+            </dependency>
             <!-- mysql数据库驱动 -->
             <dependency>
                 <groupId>mysql</groupId>
@@ -112,7 +118,7 @@
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-ui</artifactId>
-                <version>1.5.3</version>
+                <version>1.5.4</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

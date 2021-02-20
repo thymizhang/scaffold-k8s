@@ -134,9 +134,20 @@ java -Dport=8080 -Dfile.encoding=UTF-8 -jar xxx.jar --spring.profiles.active=dev
 
 > 1. mybatis-plus在控制输出信息时：yml配置比properties完整，yml配置输出信息包含数据源信息；
 
+*
+微服务启动告警：`Spring Cloud LoadBalancer is currently working with the default cache. You can switch to using Caffeine cache, by adding it to the classpath.`
+
+> 解决：添加Caffeine依赖
+> ```xml
+>         <dependency>
+>             <groupId>com.github.ben-manes.caffeine</groupId>
+>             <artifactId>caffeine</artifactId>
+>         </dependency>
+> ```
+
 ## 升级日志
 
-* [2020.01] springboot升级到2.4.2，springcloud升级到2020.0.1，nacos升级到2.2.5.RC2，mybatisplus升级到3.4.2
+* [2020.01] springboot升级到2.4.2，springcloud升级到2020.0.1，nacos升级到2.2.5.RELEASE，mybatisplus升级到3.4.2
 
 1. 启动类的注解`@SpringCloudApplication`不再推荐使用，回到`@SpringBootApplication`；
 2. 启动类无需添加`@EnableDiscoveryClient`，只要有依赖即可服务发现；
@@ -147,6 +158,7 @@ java -Dport=8080 -Dfile.encoding=UTF-8 -jar xxx.jar --spring.profiles.active=dev
 7. feign不再使用`ribbon`作为负载均衡，改为`loadbalancer`，但会与nacos服务发现冲突，需要新增和修改依赖：
 
 ```xml
+
 <dependency>
     <groupId>org.springframework.cloud</groupId>
     <artifactId>spring-cloud-loadbalancer</artifactId>

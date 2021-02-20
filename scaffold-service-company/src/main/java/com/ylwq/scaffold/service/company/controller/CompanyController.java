@@ -2,12 +2,10 @@ package com.ylwq.scaffold.service.company.controller;
 
 import com.scaffold.service.company.api.CompanyRestApi;
 import com.scaffold.service.company.dto.CompanyInfoDto;
-import com.ylwq.scaffold.common.util.JsonUtil;
 import com.ylwq.scaffold.common.util.ResponseDataUtil;
 import com.ylwq.scaffold.common.vo.ResponseData;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
