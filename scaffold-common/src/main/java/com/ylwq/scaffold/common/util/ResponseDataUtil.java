@@ -24,7 +24,7 @@ public class ResponseDataUtil {
     }
 
     /**
-     * 返回默认请求成功信息
+     * 返回默认请求成功信息200
      *
      * @return {@link ResponseData ResponseData}
      */
@@ -33,7 +33,7 @@ public class ResponseDataUtil {
     }
 
     /**
-     * 返回默认请求失败信息
+     * 返回默认请求失败信息400
      *
      * @return {@link ResponseData ResponseData}
      */
@@ -42,7 +42,7 @@ public class ResponseDataUtil {
     }
 
     /**
-     * 返回请求失败信息
+     * 返回请求失败信息400
      *
      * @param msg 自定义信息
      * @return {@link ResponseData ResponseData}
@@ -52,7 +52,7 @@ public class ResponseDataUtil {
     }
 
     /**
-     * 返回默认认证失败信息
+     * 返回默认认证失败信息401
      *
      * @return {@link ResponseData ResponseData}
      */
@@ -61,7 +61,16 @@ public class ResponseDataUtil {
     }
 
     /**
-     * 返回默认系统异常信息
+     * 返回服务器繁忙信息429
+     *
+     * @return {@link ResponseData ResponseData}
+     */
+    public static ResponseData buildTooManyRequests() {
+        return new ResponseData(ResultEnums.TOO_MANY_REQUESTS);
+    }
+
+    /**
+     * 返回默认系统异常信息500
      *
      * @return {@link ResponseData ResponseData}
      */
@@ -70,7 +79,7 @@ public class ResponseDataUtil {
     }
 
     /**
-     * 返回系统异常信息
+     * 返回系统异常信息500
      *
      * @param msg 自定义信息
      * @return {@link ResponseData ResponseData}

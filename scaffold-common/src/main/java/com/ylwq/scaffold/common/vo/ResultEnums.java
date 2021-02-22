@@ -14,9 +14,15 @@ public enum ResultEnums {
     /**
      * 状态枚举
      */
+    /* 200 */
     SUCCESS(String.valueOf(HttpStatus.OK.value()), "请求成功"),
+    /* 400 */
     FAILD(String.valueOf(HttpStatus.BAD_REQUEST.value()), "请求失败"),
+    /* 401 */
     UNAUTHORIZED(String.valueOf(HttpStatus.UNAUTHORIZED.value()),"认证失败"),
+    /* 429 */
+    TOO_MANY_REQUESTS(String.valueOf(HttpStatus.TOO_MANY_REQUESTS.value()),"服务器繁忙"),
+    /* 500 */
     ERROR(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()), "系统异常");
 
     /**
