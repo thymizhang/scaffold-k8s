@@ -77,7 +77,7 @@ public class UserController {
                     @Parameter(name = "userId", description = "用户id")
             },
             security = @SecurityRequirement(name = HttpHeaders.AUTHORIZATION))
-    @GetMapping("/userInfo/{userId}")
+    @GetMapping("/{userId}")
     public ResponseData getUserInfo(@PathVariable String userId) {
         UserInfoDto userInfo = userRestApi.getUserInfo(userId);
         if (userInfo != null) {
