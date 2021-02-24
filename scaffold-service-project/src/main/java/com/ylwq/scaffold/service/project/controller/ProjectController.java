@@ -45,14 +45,14 @@ public class ProjectController {
 
     @Operation(summary = "添加项目",
             security = @SecurityRequirement(name = HttpHeaders.AUTHORIZATION))
-    @PostMapping("/projectInfo/add")
+    @PostMapping("/add")
     public ResponseData addProject(@RequestBody ProjectInfoDto projectInfoDto) {
         return null;
     }
 
     @Operation(summary = "编辑项目信息",
             security = @SecurityRequirement(name = HttpHeaders.AUTHORIZATION))
-    @PutMapping("/projectInfo/edit")
+    @PutMapping("/edit")
     public ResponseData editProjectInfo(@RequestBody ProjectInfoDto projectInfoDto) {
         return ResponseDataUtil.buildSuccess(projectRestApi.editProjectInfo(projectInfoDto));
     }
