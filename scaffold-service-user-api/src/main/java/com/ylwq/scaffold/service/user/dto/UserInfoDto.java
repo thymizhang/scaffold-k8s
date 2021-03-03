@@ -1,9 +1,8 @@
 package com.ylwq.scaffold.service.user.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * 用户信息DTO<br/>
@@ -13,36 +12,35 @@ import lombok.NoArgsConstructor;
  * @Date 2021/1/7
  */
 @Data
-@Schema(description = "用户信息DTO")
+@ApiModel(value = "UserInfoDto", description = "用户信息DTO")
 public class UserInfoDto {
     /**
      * 用户id
      */
-    @Schema(description = "用户id", required = true)
+    @ApiModelProperty(value = "用户id", required = true)
     Long id;
 
     /**
      * 公司id
      */
-    @Schema(description = "公司id")
+    @ApiModelProperty("公司id")
     Long companyId;
 
     /**
      * 用户名
      */
-    @Schema(description = "用户名")
+    @ApiModelProperty("用户名")
     String userName;
 
     /**
      * 用户头像
      */
-    @Schema(description = "用户头像")
+    @ApiModelProperty("用户头像")
     String imageHead;
 
     /**
      * 手机号码
      */
-    @Schema(description = "手机号码")
+    @ApiModelProperty("手机号码")
     String phone;
-
 }

@@ -1,6 +1,7 @@
 package com.ylwq.scaffold.common.vo;
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,29 +11,29 @@ import java.io.Serializable;
  * 显示层统一返回对象，使用了枚举{@link ResultEnums ResultEnums}
  *
  * @Author thymi
- * @Date 2021/1/7
+ * @Date 2021/3/3
  */
 @Data
 @NoArgsConstructor
-@Schema(name = "ResponseData", description = "统一返回对象")
+@ApiModel(value = "ResponseData",description = "统一返回对象")
 public class ResponseData<T> implements Serializable {
 
     /**
      * 状态码
      */
-    @Schema(description = "状态码", required = true)
+    @ApiModelProperty(value = "状态码", required = true)
     private String code;
 
     /**
      * 消息
      */
-    @Schema(description = "消息")
+    @ApiModelProperty("消息")
     private String message;
 
     /**
      * 数据对象
      */
-    @Schema(description = "数据对象")
+    @ApiModelProperty("数据对象")
     private T data;
 
 

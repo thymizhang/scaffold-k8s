@@ -4,11 +4,10 @@ import com.ylwq.scaffold.common.util.ResponseDataUtil;
 import com.ylwq.scaffold.common.vo.ResponseData;
 import com.ylwq.scaffold.service.user.api.UserRestApi;
 import com.ylwq.scaffold.service.user.dto.UserInfoDto;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.apache.http.HttpHeaders;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +30,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/user")
 @RefreshScope
-@Tag(name = "用户服务接口")
+@Api(tags = "用户服务接口")
 public class UserController {
 
     final
@@ -55,11 +54,10 @@ public class UserController {
      * @return ResponseData
      * @throws Exception 异常
      */
-    @Operation(summary = "异常测试",
-            parameters = {
-                    @Parameter(name = "type", description = "异常类型：null|user|sys|cli")
-            },
-            security = @SecurityRequirement(name = HttpHeaders.AUTHORIZATION))
+    @ApiOperation("异常测试")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "type", value = "异常类型：null|user|sys|cli")
+    })
     @GetMapping("/err/{type}")
     public ResponseData testError(@PathVariable String type) throws Exception {
         userRestApi.testException(type);
@@ -72,11 +70,10 @@ public class UserController {
      * @param userId 用户id
      * @return data：{@link UserInfoDto UserInfoDto}
      */
-    @Operation(summary = "获取用户信息",
-            parameters = {
-                    @Parameter(name = "userId", description = "用户id")
-            },
-            security = @SecurityRequirement(name = HttpHeaders.AUTHORIZATION))
+    @ApiOperation("获取用户信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户id")
+    })
     @GetMapping("/{userId}")
     public ResponseData getUserInfo(@PathVariable String userId) {
         UserInfoDto userInfo = userRestApi.getUserInfo(userId);
@@ -93,11 +90,15 @@ public class UserController {
      * @param companyId 公司id
      * @return data：{@link UserInfoDto UserInfoDto}
      */
-    @Operation(summary = "获取公司成员",
-            parameters = {
-                    @Parameter(name = "companyId", description = "公司id")
-            },
-            security = @SecurityRequirement(name = HttpHeaders.AUTHORIZATION))
+//    @Operation(summary = "获取公司成员",
+//            parameters = {
+//                    @Parameter(name = "companyId", description = "公司id")
+//            },
+//            security = @SecurityRequirement(name = HttpHeaders.AUTHORIZATION))
+    @ApiOperation("获取公司成员")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "companyId", value = "公司id")
+    })
     @GetMapping("/companyUser/{companyId}")
     public ResponseData getCompanyUser(@PathVariable String companyId) {
         if (companyId == null) {
@@ -107,8 +108,7 @@ public class UserController {
         return ResponseDataUtil.buildSuccess(companyUser);
     }
 
-    @Operation(summary = "编辑用户信息",
-            security = @SecurityRequirement(name = HttpHeaders.AUTHORIZATION))
+    @ApiOperation("编辑用户信息")
     @PutMapping("/edit")
     public ResponseData<UserInfoDto> editUserInfo(@RequestBody UserInfoDto userInfoDto) {
         if (userInfoDto == null) {

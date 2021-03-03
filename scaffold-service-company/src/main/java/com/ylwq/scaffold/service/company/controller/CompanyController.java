@@ -4,10 +4,10 @@ import com.scaffold.service.company.api.CompanyRestApi;
 import com.scaffold.service.company.dto.CompanyInfoDto;
 import com.ylwq.scaffold.common.util.ResponseDataUtil;
 import com.ylwq.scaffold.common.vo.ResponseData;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api/company")
-@Tag(name = "公司服务接口")
+@Api(tags = "公司服务接口")
 public class CompanyController {
 
     final
@@ -43,11 +43,10 @@ public class CompanyController {
      * @param companyId 公司id
      * @return 公司信息
      */
-    @Operation(summary = "获取公司信息及公司成员",
-            parameters = {
-                    @Parameter(name = "companyId", description = "公司id")
-            },
-            security = @SecurityRequirement(name = "需要认证"))
+    @ApiOperation("获取公司信息及公司成员")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "companyId", value = "公司id")
+    })
     @GetMapping("/{companyId}")
     public ResponseData<CompanyInfoDto> getCompany(@PathVariable(value = "companyId") String companyId) {
         CompanyInfoDto company = companyRestApi.getCompany(companyId);

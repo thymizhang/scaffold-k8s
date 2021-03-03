@@ -5,11 +5,10 @@ import com.ylwq.scaffold.common.util.ResponseDataUtil;
 import com.ylwq.scaffold.common.vo.ResponseData;
 import com.ylwq.scaffold.service.project.api.ProjectRestApi;
 import com.ylwq.scaffold.service.project.dto.ProjectInfoDto;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.apache.http.HttpHeaders;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,7 +21,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/project")
-@Tag(name = "项目服务接口")
+@Api(tags = "项目服务接口")
 public class ProjectController {
 
     final
@@ -32,36 +31,32 @@ public class ProjectController {
         this.projectRestApi = projectRestApi;
     }
 
-    @Operation(summary = "获取公司项目",
-            parameters = {
-                    @Parameter(name = "companyId", description = "公司id")
-            },
-            security = @SecurityRequirement(name = HttpHeaders.AUTHORIZATION))
+    @ApiOperation("获取公司项目")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "companyId", value = "公司id")
+    })
     @GetMapping("/company/{companyId}")
     public ResponseData getCompanyProjects(@PathVariable String companyId) {
         List<ProjectInfoDto> companyProject = projectRestApi.getCompanyProject(companyId);
         return ResponseDataUtil.buildSuccess(companyProject);
     }
 
-    @Operation(summary = "添加项目",
-            security = @SecurityRequirement(name = HttpHeaders.AUTHORIZATION))
+    @ApiOperation("添加项目")
     @PostMapping("/add")
     public ResponseData addProject(@RequestBody ProjectInfoDto projectInfoDto) {
         return null;
     }
 
-    @Operation(summary = "编辑项目信息",
-            security = @SecurityRequirement(name = HttpHeaders.AUTHORIZATION))
+    @ApiOperation("编辑项目信息")
     @PutMapping("/edit")
     public ResponseData editProjectInfo(@RequestBody ProjectInfoDto projectInfoDto) {
         return ResponseDataUtil.buildSuccess(projectRestApi.editProjectInfo(projectInfoDto));
     }
 
-    @Operation(summary = "RabbitMQ消息测试",
-            parameters = {
-                    @Parameter(name = "type", description = "direct | topic | fanout")
-            },
-            security = @SecurityRequirement(name = HttpHeaders.AUTHORIZATION))
+    @ApiOperation("RabbitMQ消息测试")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "type", value = "direct | topic | fanout")
+    })
     @GetMapping("/send/{type}")
     public ResponseData messageSender(@PathVariable String type) {
         List<String> types = Lists.newArrayList("direct", "topic", "fanout");
