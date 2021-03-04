@@ -4,6 +4,10 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 /**
  * 用户信息DTO<br/>
  * 技术要点：DTO的属性类型需要与ENTITY的属性类型保持一致，方便信息复制。
@@ -30,6 +34,7 @@ public class UserInfoDto {
      * 用户名
      */
     @ApiModelProperty("用户名")
+    @NotBlank
     String userName;
 
     /**
@@ -42,5 +47,7 @@ public class UserInfoDto {
      * 手机号码
      */
     @ApiModelProperty("手机号码")
+    @Size(min = 11, max = 11, message = "请输入11位手机号码")
+    @Pattern(regexp = "[0-9]*", message = "请输入正确的手机号码")
     String phone;
 }

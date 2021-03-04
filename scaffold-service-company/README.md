@@ -42,7 +42,27 @@ public class CompanyApplication {
 }
 ```
 
-### 三、在线文档配置
+### 三、在线文档配置之springfox
+* springfox与springdoc
+  springfox优势：应用广泛，与spring-cloud-gateway整合相对容易
+  springdoc优势：配置简单，支持OAuth2
+
+1. 相关依赖
+```xml
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+        </dependency>
+```
+2. 在线文档 启动/关闭 配置
+```properties
+# swagger-ui地址：http://localhost:port/swagger-ui/index.html
+springfox.documentation.swagger-ui.enabled = true
+```
+3. 配置类，配置文档摘要等信息，参考：[`SpringfoxConfig.java`](src/main/java/com/ylwq/scaffold/service/company/config/SpringfoxConfig.java)
+
+
+### 四、在线文档配置之springdoc
 * springdoc介绍 
   springdoc是api文档标准OpenApi的非官方实现，另一个是springfox。springdoc帮助使用者将swagger3集成到SpringBoot中，springdoc-openapi库支持：
   > OpenAPI 3  
@@ -57,7 +77,7 @@ public class CompanyApplication {
     <version>1.5.0</version>
 </dependency>
 ```
-2. 在``bootstrap.yml`或Nacos配置文件中配置springdoc；
+2. 在`bootstrap.yml`或Nacos配置文件中配置springdoc；
 ```yaml
 springdoc:
   api-docs:
@@ -70,22 +90,38 @@ springdoc:
 ```
 3. 添加配置类[`OpenApiConfig`](src/main/java/com/ylwq/scaffold/service/company/config/OpenApiConfig.java)，定义描述、安全配置、配置分组等；
 ```java
+/**
+ * 在线文档SpringDoc配置类<br/>
+ * 定义描述`@OpenAPIDefinition`：servers，请求服务地址配置，可以按不同的环境配置；tags，用来定义一些公共参数说明，比如：token或者其他自定义key；<br/>
+ * 安全配置`@SecurityScheme`：JWT Token。也可以配置其他类型的鉴权，比如：basic；<br/>
+ *
+ */
 @OpenAPIDefinition(
         info = @Info(
                 title = "${spring.application.name}",
                 version = "1.0.0",
                 description = "SCAFFOLD-K8S"
+        ),
+        externalDocs = @ExternalDocumentation(description = "参考文档",
+                url = "https://github.com/swagger-api/swagger-core/wiki/Swagger-2.X---Annotations"
         )
 )
 @SecurityScheme(name = HttpHeaders.AUTHORIZATION, type = SecuritySchemeType.HTTP, bearerFormat = "JWT", scheme = "bearer")
 @Configuration
 public class OpenApiConfig {
-    @Bean
-    public GroupedOpenApi storeOpenApi() {
-        String[] packages = {"com.ylwq.scaffold.service.company", "com.ylwq.scaffold.service.user"};
-        return GroupedOpenApi.builder().group("service").packagesToScan(packages)
-                .build();
-    }
+
+  /**
+   * 分组配置
+   *
+   * @return GroupedOpenApi
+   */
+  @Bean
+  public GroupedOpenApi storeOpenApi() {
+    String[] packages = {"com.ylwq.scaffold.service.company", "com.ylwq.scaffold.service.user"};
+    return GroupedOpenApi.builder().group("service").packagesToScan(packages)
+            .build();
+  }
+
 }
 ```
 4. 使用注解添加文档说明；
@@ -101,6 +137,14 @@ public class OpenApiConfig {
 @ApiOperation(value = "foo", notes = "bar") -> @Operation(summary = "foo", description = "bar")
 @ApiParam -> @Parameter
 @ApiResponse(code = 404, message = "foo") -> @ApiResponse(responseCode = "404", description = "foo")
+```
+```java
+// 方法标注举例
+    @Operation(summary = "获取公司成员",
+            parameters = {
+                    @Parameter(name = "companyId", description = "公司id")
+            },
+            security = @SecurityRequirement(name = HttpHeaders.AUTHORIZATION))
 ```
 5. 重要注解说明：
 > @OpenAPIDefinition：在springboot之中只会生效一个，用于描述该服务的全局信息；  

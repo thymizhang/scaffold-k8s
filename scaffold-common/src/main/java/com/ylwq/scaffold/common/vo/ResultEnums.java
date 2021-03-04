@@ -20,6 +20,8 @@ public enum ResultEnums {
     FAILD(String.valueOf(HttpStatus.BAD_REQUEST.value()), "请求失败"),
     /* 401 */
     UNAUTHORIZED(String.valueOf(HttpStatus.UNAUTHORIZED.value()),"认证失败"),
+    /* 403 */
+    FORBIDDEN(String.valueOf(HttpStatus.FORBIDDEN.value()),"禁止访问"),
     /* 429 */
     TOO_MANY_REQUESTS(String.valueOf(HttpStatus.TOO_MANY_REQUESTS.value()),"服务器繁忙"),
     /* 500 */

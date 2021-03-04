@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 /**
@@ -13,7 +15,7 @@ import java.util.List;
  * @Date 2021/1/7
  */
 @Data
-@ApiModel(value = "CompanyInfoDto",description = "公司信息DTO")
+@ApiModel(value = "CompanyInfoDto", description = "公司信息DTO")
 public class CompanyInfoDto {
 
     /**
@@ -26,13 +28,15 @@ public class CompanyInfoDto {
      * 公司名称
      */
     @ApiModelProperty("公司名称")
+    @NotBlank
     String name;
 
     /**
      * 公司成员数量
      */
     @ApiModelProperty("公司成员数量")
-    String userCount;
+    @Min(0)
+    Integer userCount;
 
     /**
      * 创建者id

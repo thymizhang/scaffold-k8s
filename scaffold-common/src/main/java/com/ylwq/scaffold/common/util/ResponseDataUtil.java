@@ -19,6 +19,7 @@ public class ResponseDataUtil {
      * @param <T>  数据类
      * @return {@link ResponseData ResponseData}
      */
+    @SuppressWarnings("unchecked")
     public static <T> ResponseData buildSuccess(T data) {
         return new ResponseData(ResultEnums.SUCCESS, data);
     }
@@ -49,6 +50,18 @@ public class ResponseDataUtil {
      */
     public static ResponseData buildFaild(String msg) {
         return new ResponseData(ResultEnums.FAILD, msg);
+    }
+
+    /**
+     * 返回请求失败信息400，及错误数据
+     *
+     * @param data 数据对象
+     * @param <T>  错误数据类
+     * @return {@link ResponseData ResponseData}
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> ResponseData buildFaild(T data) {
+        return new ResponseData(ResultEnums.FAILD, data);
     }
 
     /**

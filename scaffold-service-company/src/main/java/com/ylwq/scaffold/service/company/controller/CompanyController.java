@@ -4,14 +4,14 @@ import com.scaffold.service.company.api.CompanyRestApi;
 import com.scaffold.service.company.dto.CompanyInfoDto;
 import com.ylwq.scaffold.common.util.ResponseDataUtil;
 import com.ylwq.scaffold.common.vo.ResponseData;
+import com.ylwq.scaffold.service.user.dto.UserInfoDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.constraints.Size;
 
 /**
  * 公司服务接口，使用统一对象返回给前端<br/>
@@ -45,11 +45,24 @@ public class CompanyController {
      */
     @ApiOperation("获取公司信息及公司成员")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "companyId", value = "公司id")
+            @ApiImplicitParam(name = "companyId", value = "公司id", dataTypeClass = String.class)
     })
+    @SuppressWarnings("unchecked")
     @GetMapping("/{companyId}")
     public ResponseData<CompanyInfoDto> getCompany(@PathVariable(value = "companyId") String companyId) {
         CompanyInfoDto company = companyRestApi.getCompany(companyId);
         return ResponseDataUtil.buildSuccess(company);
+    }
+
+    @ApiOperation("微服务接口调用测试")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户id", required = true, dataTypeClass = Integer.class),
+            @ApiImplicitParam(name = "userName", value = "用户名", required = true, dataTypeClass = String.class)
+    })
+    @SuppressWarnings("unchecked")
+    @PutMapping("/user/edit")
+    public ResponseData<UserInfoDto> remoteTest(@RequestParam Integer userId,@RequestParam @Size(min = 3) String userName) {
+        UserInfoDto userInfoDto = companyRestApi.remoteTest(userId, userName);
+        return ResponseDataUtil.buildSuccess(userInfoDto);
     }
 }

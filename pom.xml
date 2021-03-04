@@ -41,7 +41,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>2.4.2</version>
+                <version>2.4.3</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -70,6 +70,18 @@
                 <groupId>com.github.ben-manes.caffeine</groupId>
                 <artifactId>caffeine</artifactId>
                 <version>2.9.0</version>
+            </dependency>
+            <!-- sentinel依赖 -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+                <version>2.2.5.RELEASE</version>
+            </dependency>
+            <!-- sentinel提供的gateway适配器 -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-sentinel-gateway</artifactId>
+                <version>2.2.5.RELEASE</version>
             </dependency>
             <!-- mysql数据库驱动 -->
             <dependency>
@@ -114,11 +126,11 @@
                 <version>1.18.18</version>
                 <scope>provided</scope>
             </dependency>
-            <!-- 在线文档生成 -->
+            <!-- springfox依赖，在线文档 -->
             <dependency>
-                <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-ui</artifactId>
-                <version>1.5.4</version>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-boot-starter</artifactId>
+                <version>3.0.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -130,8 +142,13 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+        </dependency>
+        <!-- 参数校验 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
     </dependencies>
     <!-- 打包、编译插件声明 -->
@@ -148,7 +165,7 @@
                     <!-- 打可执行包插件声明，包括jar、war等，微服务子模块必须要声明该插件 -->
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>2.3.7.RELEASE</version>
+                    <version>2.4.3</version>
                     <executions>
                         <execution>
                             <goals>
@@ -165,15 +182,5 @@
                 </plugin>
             </plugins>
         </pluginManagement>
-
-        <!--        <resources>
-                    <resource>
-                        <directory>src/main/resources/</directory>
-                        <includes>
-                            <include>/*.properties</include>
-                            <include>/*.yml</include>
-                        </includes>
-                    </resource>
-                </resources>-->
     </build>
 </project>

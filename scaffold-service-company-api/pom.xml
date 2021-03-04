@@ -17,6 +17,12 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
         </dependency>
+        <!-- 服务依赖：公司服务 -->
+        <dependency>
+            <groupId>com.ylwq</groupId>
+            <artifactId>scaffold-service-user-api</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
 </project>

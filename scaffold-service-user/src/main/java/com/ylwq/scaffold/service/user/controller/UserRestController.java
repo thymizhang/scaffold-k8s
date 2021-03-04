@@ -171,4 +171,20 @@ public class UserRestController implements UserRestApi {
             return null;
         }
     }
+
+    @Override
+    public UserInfoDto editUserName(Integer userId, String userName) {
+        UserInfo userInfo = new UserInfo();
+        userInfo.setId(Long.valueOf(userId));
+        userInfo.setUserName(userName);
+        boolean success = userInfoService.updateById(userInfo);
+        if (success) {
+            UserInfoDto userInfoDto = new UserInfoDto();
+            userInfo = userInfoService.getById(userId);
+            BeansUtil.copyProperties(userInfo, userInfoDto);
+            return userInfoDto;
+        } else {
+            return null;
+        }
+    }
 }

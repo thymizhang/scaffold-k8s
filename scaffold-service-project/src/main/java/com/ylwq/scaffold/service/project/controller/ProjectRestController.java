@@ -57,6 +57,13 @@ public class ProjectRestController implements ProjectRestApi {
     }
 
     @Override
+    public boolean addProjectInfo(ProjectInfoDto projectInfoDto) {
+        ProjectInfo projectInfo = new ProjectInfo();
+        BeansUtil.copyProperties(projectInfoDto, projectInfo);
+        return projectInfoService.save(projectInfo);
+    }
+
+    @Override
     public ProjectInfoDto editProjectInfo(ProjectInfoDto projectInfoDto) {
         ProjectInfo projectInfo = new ProjectInfo();
         BeansUtil.copyProperties(projectInfoDto, projectInfo);

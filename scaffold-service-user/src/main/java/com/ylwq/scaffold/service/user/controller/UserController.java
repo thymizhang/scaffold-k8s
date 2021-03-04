@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -56,7 +57,7 @@ public class UserController {
      */
     @ApiOperation("异常测试")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "type", value = "异常类型：null|user|sys|cli")
+            @ApiImplicitParam(name = "type", value = "异常类型：null|user|sys|cli", dataTypeClass = String.class)
     })
     @GetMapping("/err/{type}")
     public ResponseData testError(@PathVariable String type) throws Exception {
@@ -72,7 +73,7 @@ public class UserController {
      */
     @ApiOperation("获取用户信息")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "userId", value = "用户id")
+            @ApiImplicitParam(name = "userId", value = "用户id", dataTypeClass = String.class)
     })
     @GetMapping("/{userId}")
     public ResponseData getUserInfo(@PathVariable String userId) {
@@ -90,14 +91,9 @@ public class UserController {
      * @param companyId 公司id
      * @return data：{@link UserInfoDto UserInfoDto}
      */
-//    @Operation(summary = "获取公司成员",
-//            parameters = {
-//                    @Parameter(name = "companyId", description = "公司id")
-//            },
-//            security = @SecurityRequirement(name = HttpHeaders.AUTHORIZATION))
     @ApiOperation("获取公司成员")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "companyId", value = "公司id")
+            @ApiImplicitParam(name = "companyId", value = "公司id", dataTypeClass = String.class)
     })
     @GetMapping("/companyUser/{companyId}")
     public ResponseData getCompanyUser(@PathVariable String companyId) {
@@ -109,8 +105,9 @@ public class UserController {
     }
 
     @ApiOperation("编辑用户信息")
+    @SuppressWarnings("unchecked")
     @PutMapping("/edit")
-    public ResponseData<UserInfoDto> editUserInfo(@RequestBody UserInfoDto userInfoDto) {
+    public ResponseData<UserInfoDto> editUserInfo(@RequestBody @Validated UserInfoDto userInfoDto) {
         if (userInfoDto == null) {
             return ResponseDataUtil.buildError();
         }

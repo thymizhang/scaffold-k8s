@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class ProjectController {
 
     @ApiOperation("获取公司项目")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "companyId", value = "公司id")
+            @ApiImplicitParam(name = "companyId", value = "公司id", dataTypeClass = String.class)
     })
     @GetMapping("/company/{companyId}")
     public ResponseData getCompanyProjects(@PathVariable String companyId) {
@@ -43,19 +44,24 @@ public class ProjectController {
 
     @ApiOperation("添加项目")
     @PostMapping("/add")
-    public ResponseData addProject(@RequestBody ProjectInfoDto projectInfoDto) {
-        return null;
+    public ResponseData addProject(@RequestBody @Validated ProjectInfoDto projectInfoDto) {
+        boolean isOk = projectRestApi.addProjectInfo(projectInfoDto);
+        if (isOk) {
+            return ResponseDataUtil.buildSuccess();
+        } else {
+            return ResponseDataUtil.buildFaild();
+        }
     }
 
     @ApiOperation("编辑项目信息")
     @PutMapping("/edit")
-    public ResponseData editProjectInfo(@RequestBody ProjectInfoDto projectInfoDto) {
+    public ResponseData editProjectInfo(@RequestBody @Validated ProjectInfoDto projectInfoDto) {
         return ResponseDataUtil.buildSuccess(projectRestApi.editProjectInfo(projectInfoDto));
     }
 
     @ApiOperation("RabbitMQ消息测试")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "type", value = "direct | topic | fanout")
+            @ApiImplicitParam(name = "type", value = "direct | topic | fanout", dataTypeClass = String.class)
     })
     @GetMapping("/send/{type}")
     public ResponseData messageSender(@PathVariable String type) {
@@ -66,5 +72,4 @@ public class ProjectController {
         }
         return ResponseDataUtil.buildFaild("请输入：direct | topic | fanout");
     }
-
 }

@@ -4,6 +4,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+
 /**
  * 项目信息DTO
  *
@@ -22,18 +25,20 @@ public class ProjectInfoDto {
     /**
      * 公司id
      */
-    @ApiModelProperty("公司id")
+    @ApiModelProperty(value = "公司id", required = true)
     Long companyId;
 
     /**
      * 项目名称
      */
     @ApiModelProperty("项目名称")
+    @NotBlank
     String name;
 
     /**
      * 项目成员数
      */
     @ApiModelProperty("项目成员数")
+    @Min(0)
     Integer userCount;
 }

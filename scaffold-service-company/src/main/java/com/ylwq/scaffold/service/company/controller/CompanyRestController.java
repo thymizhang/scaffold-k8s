@@ -56,13 +56,17 @@ public class CompanyRestController implements CompanyRestApi {
     }
 
     @Override
-    public String createCompany(CompanyInfoDto company) {
-        if (company.getName() != null || company.getCreatorId() != null) {
+    public boolean createCompany(CompanyInfoDto companyInfoDto) {
+        if (companyInfoDto.getName() != null || companyInfoDto.getCreatorId() != null) {
             CompanyInfo companyInfo = new CompanyInfo();
-            BeansUtil.copyProperties(company,companyInfo);
-
+            BeansUtil.copyProperties(companyInfoDto,companyInfo);
+            return companyInfoService.save(companyInfo);
         }
+        return false;
+    }
 
-        return null;
+    @Override
+    public UserInfoDto remoteTest(Integer userId, String userName){
+        return userRestFeign.editUserName(userId,userName);
     }
 }

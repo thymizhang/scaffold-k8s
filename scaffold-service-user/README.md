@@ -6,6 +6,8 @@
 一、 微服务配置及配置读取；
 二、 Json数据的null值替换；  
 三、 Mybatis-plus应用；  
+四、 统一请求参数校验；  
+
   
 ### 一、微服务配置及配置读取
 1. spring-cloud微服务默认配置文件为`bootstrap.yml`或`bootstrap.properties`；
@@ -38,10 +40,30 @@
 1. 将Controller返回给前端Json数据中的null统一替换为空字符串，案例：[JsonConfig.java](src/main/java/com/ylwq/scaffold/service/user/config/JsonConfig.java)；
 2. 在手动Json格式转换过程中，将Json数据中的null统一替换为空字符串，案例：[JsonUtil.java](../scaffold-common/src/main/java/com/ylwq/scaffold/common/util/JsonUtil.java);
 
+
 ### 三、Mybatis-plus应用 [官方文档](https://mybatis.plus/guide/)
 1. Mybatis-plus配置，案例：[MyBatisPlusConfig.java](src/main/java/com/ylwq/scaffold/service/user/config/MyBatisPlusConfig.java)；
 2. 实体对象与数据库表映射，案例：[UserInfo.java](src/main/java/com/ylwq/scaffold/service/user/entity/UserInfo.java)；
 3. 创建DAO，案例：[UserInfoMapper.java](src/main/java/com/ylwq/scaffold/service/user/dao/UserInfoMapper.java)；
 4. 创建Service，案例：[UserInfoService.java](src/main/java/com/ylwq/scaffold/service/user/service/UserInfoService.java)；
 5. 实现Service，案例：[UserInfoServiceImpl.java](src/main/java/com/ylwq/scaffold/service/user/service/impl/UserInfoServiceImpl.java)；
+
+
+### 四、统一请求参数校验
+* 请求参数校验使用`spring-boot-starter-validation`，通过全局异常处理类实现参数校验异常统一返回。  
+1. 相关依赖
+```xml
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+```
+2. 添加参数校验规则，参考[`UserInfoDto.java`]
+> @NotBlank  
+> @min @max  
+> @Size  
+> @Email  
+> @Pattern ...  
+3. 使用`@Validated`让接口参数校验生效，参考[`UserController.java`](/src/main/java/com/ylwq/scaffold/service/user/controller/UserController.java)
+4. 全局异常处理类实现参数校验异常统一返回，参考[`GlobalControllerExceptionHandler.java`](/src/main/java/com/ylwq/scaffold/service/user/handler/GlobalControllerExceptionHandler.java)
 
