@@ -1,0 +1,75 @@
+server:
+  port: ${port:9000}
+
+---
+
+spring:
+  application:
+    name: server-gateway
+  main:
+    allow-bean-definition-overriding: true
+
+---
+
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: nacos.gceasy.cc:8848
+        namespace: SCAFFOLD-DEV
+
+---
+
+spring:
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false  # 如果微服务负载均衡使用了spring-cloud-loadbalancer，关闭负载均衡Ribbon，替换成Spring Cloud Load Balancer
+
+---
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true                               # 是否开启基于服务发现的路由规则，该方式不会生成路由id，只能通过默认url访问，访问方式：http://localhost/服务名/api/**
+          lower-case-service-id: true                 # 是否将服务名称转小写
+      routes:
+        - id: service-user                            # 路由id，访问方式：http://localhost/api/user/**
+          uri: lb://service-user                      # 目标uri
+          predicates:                                 # 断言（判断条件）
+            - Path=/api/user/**
+        - id: service-company
+          uri: lb://service-company
+          predicates:
+            - Path=/api/company/**
+        - id: service-project
+          uri: lb://service-project
+          predicates:
+            - Path=/api/project/**
+
+---
+
+spring:
+  cloud:
+    sentinel:
+      eager: true                          # 取消Sentinel控制台懒加载，即项目启动即连接
+      filter:
+        enabled: false                     # 如果在网关流控控制台上看到了url资源，就是此项没有设为false
+      transport:
+        dashboard: sentinel.gceasy.cc:9090 # 如果需要可视化查看限流，可配置Sentinel DashBoard地址
+#      scg:
+#        fallback:
+#          mode: redirect                   # 限流处理策略，目前支持跳转redirect和自定义返回response两种策略，不推荐使用response策略（影响统一返回）
+#          redirect: http://baidu.com      # 限流之后的跳转URL，仅在mode=redirect的时候生效
+#          #response-status: 429             # 限流之后的返回status code，仅在mode=response的时候生效
+#          #response-body: 服务器忙，请稍后    # 限流之后的返回内容，仅在mode=response的时候生效
+
+
+---
+
+springfox:
+  documentation:
+    swagger-ui:
+      enabled: true     # 开启swagger3文档显示
