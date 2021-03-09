@@ -18,6 +18,12 @@
             <artifactId>scaffold-common</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <!-- 服务依赖：用户服务 -->
+        <dependency>
+            <groupId>com.ylwq</groupId>
+            <artifactId>scaffold-service-user-api</artifactId>
+            <version>1.0.0</version>
+        </dependency>
         <!-- 服务依赖：公司服务 -->
         <dependency>
             <groupId>com.ylwq</groupId>
@@ -40,12 +46,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-        </dependency>
-        <!-- 需要调用用户服务接口 -->
-        <dependency>
-            <groupId>com.ylwq</groupId>
-            <artifactId>scaffold-service-user-api</artifactId>
-            <version>1.0.0</version>
         </dependency>
         <!-- spring-cloud2020版之后，需要引入该依赖才能支持bootstrap配置文件 -->
         <dependency>
