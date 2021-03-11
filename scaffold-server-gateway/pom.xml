@@ -16,7 +16,6 @@
         <dependency>
             <groupId>com.ylwq</groupId>
             <artifactId>scaffold-common</artifactId>
-            <version>1.0.0</version>
         </dependency>
         <!-- spring-gateway依赖 -->
         <dependency>
@@ -24,24 +23,14 @@
             <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
         <!-- spring-cloud2020版之后，需要引入该依赖才能支持bootstrap配置文件 -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-starter-bootstrap</artifactId>-->
+<!--        </dependency>-->
         <!-- 服务注册与发现 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
-        <!-- spring-cloud2020版本后，负载均衡不再使用Ribbon而是使用spring-cloud-loadbalancer -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-loadbalancer</artifactId>
-        </dependency>
-        <!-- spring-cloud2020版本后，使用spring-cloud-loadbalancer作为负载均衡，需要用到caffeine缓存 -->
-        <dependency>
-            <groupId>com.github.ben-manes.caffeine</groupId>
-            <artifactId>caffeine</artifactId>
         </dependency>
         <!-- sentinel依赖 -->
         <dependency>

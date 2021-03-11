@@ -15,7 +15,7 @@
         <module>scaffold-service-project</module>
         <module>scaffold-service-company-api</module>
         <module>scaffold-service-project-api</module>
-        <module>scaffold-server-auth</module>
+        <module>scaffold-server-security</module>
         <module>scaffold-server-gateway</module>
     </modules>
 
@@ -37,11 +37,34 @@
     <!-- 依赖管理,依赖版本控制，子模块使用依赖时无需提供版本号 -->
     <dependencyManagement>
         <dependencies>
+            <!-- ***项目依赖*** -->
+            <dependency>
+                <groupId>com.ylwq</groupId>
+                <artifactId>scaffold-common</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ylwq</groupId>
+                <artifactId>scaffold-service-user-api</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ylwq</groupId>
+                <artifactId>scaffold-service-company-api</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ylwq</groupId>
+                <artifactId>scaffold-service-project-api</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+            <!-- ***项目依赖*** -->
+
             <!-- Springboot依赖 -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>2.4.3</version>
+                <version>2.3.9.RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -49,7 +72,7 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>2020.0.1</version>
+                <version>Hoxton.SR10</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -117,7 +140,7 @@
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-core</artifactId>
-                <version>5.5.8</version>
+                <version>5.5.9</version>
             </dependency>
             <!-- 代码简化，常用：@Data @Slf4j -->
             <dependency>
@@ -165,7 +188,7 @@
                     <!-- 打可执行包插件声明，包括jar、war等，微服务子模块必须要声明该插件 -->
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>2.4.3</version>
+                    <version>2.3.9.RELEASE</version>
                     <executions>
                         <execution>
                             <goals>
