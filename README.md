@@ -7,9 +7,9 @@
 ## 项目介绍
 
 1. scaffold-common : 公共工程，抽象和实现各类工具，技术要点：自定义异常和错误码，统一返回状态码规则，全局异常处理；
-2. scaffold-server-auth : 认证授权，基于Spring Security框架实现的用户认证、token授权，支持Oauth2协议，用户登录校验通过service-user；
+2. scaffold-server-security : 认证授权，基于Spring Security框架实现的用户认证、token授权，支持Oauth2协议，用户登录校验通过service-user；
 3. scaffold-server-gateway : 服务网关，技术要点：网关路由配置、SpringFox在线文档聚合、Sentinel限流与熔断、统一认证；
-4. scaffold-service-company : 公司微服务，技术要点：微服务接口定义原则、服务间调用、SpringFox在线文档配置、文件上传与下载；
+4. scaffold-service-company : 公司微服务，技术要点：微服务接口定义原则、服务间调用、SpringFox在线文档配置、定时任务；
 5. scaffold-service-company-api : 公司微服务接口，面向其他微服务提供接口依赖；
 6. scaffold-service-project : 项目微服务，技术要点：Sharding-jdbc分库分表应用、Redis缓存应用、Spring-AMQP+RabbitMq消息应用、分布式事务；
 7. scaffold-service-project-api : 项目微服务接口，面向其他微服务提供接口依赖；
@@ -109,6 +109,11 @@ java -Dport=8080 -Dfile.encoding=UTF-8 -jar xxx.jar --spring.profiles.active=dev
 > 说明：确认后会自动删除`pom.xml.versionsBackup`文件
 
 ## 问题
+
+* 项目中maven依赖报红的处理
+
+> 1. 使用idea自带功能：File -> Invalidate Caches / Restart...   
+> 2. 如果还有依赖报红，在pom.xml文件中修改报红依赖的版本，重载，再改回原来的版本，再重载 
 
 * 使用lombok的@Slf4j，但log没有info的方法
 
