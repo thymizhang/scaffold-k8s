@@ -20,11 +20,11 @@ spring:
 
 ---
 
-spring:
-  cloud:
-    loadbalancer:
-      ribbon:
-        enabled: false  # 如果微服务负载均衡使用了spring-cloud-loadbalancer，关闭负载均衡Ribbon，替换成Spring Cloud Load Balancer
+#spring:
+#  cloud:
+#    loadbalancer:
+#      ribbon:
+#        enabled: false  # 如果微服务负载均衡使用了spring-cloud-loadbalancer，关闭负载均衡Ribbon，替换成Spring Cloud Load Balancer
 
 ---
 
