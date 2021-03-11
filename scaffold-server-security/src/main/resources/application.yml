@@ -1,0 +1,19 @@
+server:
+  port: ${port:8080}
+
+---
+
+spring:
+  application:
+    name: server-security
+  main:
+    allow-bean-definition-overriding: true
+
+---
+
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: nacos.gceasy.cc:8848
+        namespace: SCAFFOLD-DEV
