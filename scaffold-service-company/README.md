@@ -4,8 +4,8 @@
 ## 技术要点  
 一、微服务对外接口定义原则；
 二、微服务接口及服务间调用；  
-三、在线文档配置，[springdoc-openapi](https://github.com/springdoc/springdoc-openapi) ；  
-四、文件上传与下载；  
+三、在线文档配置之springfox；  
+四、定时任务；
 
 ### 一、微服务对外接口定义原则
 * 重点：将前端访问接口与微服务之间访问的接口分开编写
@@ -62,7 +62,27 @@ springfox.documentation.swagger-ui.enabled = true
 3. 配置类，配置文档摘要等信息，参考：[`SpringfoxConfig.java`](src/main/java/com/ylwq/scaffold/service/company/config/SpringfoxConfig.java)
 
 
-### 四、在线文档配置之springdoc
+### 四、定时任务
+
+1. 在启动类使用`@EnableScheduling`开启定时任务；
+2. 在组件中的方法使用`@Scheduled`设置定时任务，参考：[`ScheduleJobs.java`](src/main/java/com/ylwq/scaffold/service/company/component/ScheduleJobs.java)；
+```text
+定时周期设置参考：
+*/5 * * * *		每5分钟执行
+5 * * * *		每小时的第5分钟执行一次
+30 5 * * *		每天的 5:30 执行
+30 7 8 * *		每月8号的7:30分执行
+30 5 8 6 *		每年的6月8日5:30执行
+30 6 * * 0		每星期日的6:30执行 [注：0表示星期天，1表示星期1，以此类推，也可以用英文来表示，sun表示星期天，mon表示星期一等]
+30 3 10,20 * *	每月10号及20号的3：30执行 [注：“，”用来连接多个不连续的时段]
+25 8-11 * * *	每天8-11点的第25分钟执行 [注：“-”用来连接连续的时段]
+*/15 * * * *	每15分钟执行一次 [即每个小时的第0 15 30 45 60分钟执行 ]
+30 6 */10 * *	每个月中，每隔10天6:30执行一次 [即每月的1、11、21、31日是的6：30执行一次]
+```
+3. 如何避免在集群时，定时任务重复执行？
+* 思路：使用redis分布式锁:setnx命令
+
+### 在线文档配置之springdoc
 * springdoc介绍 
   springdoc是api文档标准OpenApi的非官方实现，另一个是springfox。springdoc帮助使用者将swagger3集成到SpringBoot中，springdoc-openapi库支持：
   > OpenAPI 3  
