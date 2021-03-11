@@ -12,7 +12,6 @@ import com.ylwq.scaffold.service.project.entity.ProjectBudget;
 import com.ylwq.scaffold.service.project.entity.ProjectInfo;
 import com.ylwq.scaffold.service.project.service.ProjectBudgetService;
 import com.ylwq.scaffold.service.project.service.ProjectInfoService;
-import io.swagger.v3.oas.annotations.Hidden;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,7 +24,6 @@ import java.util.List;
  * @Date 2021/1/7
  */
 @RestController
-@Hidden
 @Slf4j
 public class ProjectRestController implements ProjectRestApi {
 

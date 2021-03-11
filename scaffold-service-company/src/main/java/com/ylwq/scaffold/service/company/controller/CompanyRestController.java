@@ -9,7 +9,6 @@ import com.ylwq.scaffold.service.company.entity.CompanyInfo;
 import com.ylwq.scaffold.service.company.feign.UserRestFeign;
 import com.ylwq.scaffold.service.company.service.CompanyInfoService;
 import com.ylwq.scaffold.service.user.dto.UserInfoDto;
-import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,7 +20,6 @@ import java.util.List;
  * @Author thymi
  * @Date 2021/1/7
  */
-@Hidden
 @RestController
 public class CompanyRestController implements CompanyRestApi {
 
