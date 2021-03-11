@@ -2,6 +2,7 @@ package com.ylwq.scaffold.service.user.api;
 
 import com.ylwq.scaffold.service.user.dto.ComboDto;
 import com.ylwq.scaffold.service.user.dto.UserInfoDto;
+import com.ylwq.scaffold.service.user.dto.UserLoginDto;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -99,4 +100,14 @@ public interface UserRestApi {
      */
     @PostMapping("/editUserName")
     UserInfoDto editUserName(@RequestParam("userId") Integer userId, @RequestParam("userName") String userName);
+
+    /**
+     * 用户登录<br/>
+     * 使用UserLoginDto返回信息，而不是UserInfoDto，是为了防止密码泄露
+     *
+     * @param userName 用户名
+     * @return UserLoginDto 用户登录DTO
+     */
+    @PostMapping("/login")
+    UserLoginDto login(@RequestParam("userName") String userName);
 }

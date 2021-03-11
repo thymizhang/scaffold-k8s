@@ -10,12 +10,12 @@ import com.ylwq.scaffold.common.exception.*;
 import com.ylwq.scaffold.common.util.BeansUtil;
 import com.ylwq.scaffold.common.util.JsonUtil;
 import com.ylwq.scaffold.common.vo.ResponseData;
-import com.ylwq.scaffold.service.user.entity.UserInfo;
-import com.ylwq.scaffold.service.user.service.UserInfoService;
 import com.ylwq.scaffold.service.user.api.UserRestApi;
 import com.ylwq.scaffold.service.user.dto.ComboDto;
 import com.ylwq.scaffold.service.user.dto.UserInfoDto;
-import io.swagger.v3.oas.annotations.Hidden;
+import com.ylwq.scaffold.service.user.dto.UserLoginDto;
+import com.ylwq.scaffold.service.user.entity.UserInfo;
+import com.ylwq.scaffold.service.user.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,7 +45,6 @@ import java.util.Properties;
  */
 @RestController
 @RefreshScope
-@Hidden
 public class UserRestController implements UserRestApi {
 
     /**
@@ -186,5 +185,20 @@ public class UserRestController implements UserRestApi {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public UserLoginDto login(String userName) {
+        if (userName != null) {
+            LambdaQueryWrapper<UserInfo> lambdaQueryWrapper = Wrappers.lambdaQuery();
+            lambdaQueryWrapper.eq(UserInfo::getUserName, userName);
+            UserInfo userinfo = userInfoService.getOne(lambdaQueryWrapper);
+            if (userinfo != null) {
+                UserLoginDto userLoginDto = new UserLoginDto();
+                BeansUtil.copyProperties(userinfo, userLoginDto);
+                return userLoginDto;
+            }
+        }
+        return null;
     }
 }
