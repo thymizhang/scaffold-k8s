@@ -1,11 +1,7 @@
 package com.ylwq.scaffold.server.security.controller;
 
-import com.ylwq.scaffold.common.util.ResponseDataUtil;
-import com.ylwq.scaffold.common.vo.ResponseData;
 import com.ylwq.scaffold.server.security.feign.UserRestFeign;
-import com.ylwq.scaffold.service.user.dto.UserLoginDto;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,19 +19,18 @@ public class SecurityController {
         this.userRestFeign = userRestFeign;
     }
 
-    @GetMapping("/loginUser/{userName}")
-    public ResponseData loginUser(@PathVariable("userName") String userName){
-        UserLoginDto userLoginDto = userRestFeign.login(userName);
-        return ResponseDataUtil.buildSuccess(userLoginDto);
+    @PostMapping("/toMain")
+    public String main() {
+        return "登录成功";
     }
 
-/*    @PostMapping("/login")
-    public String login(){
-        return "redirect:main.html";
-    }*/
+    @PostMapping("/toError")
+    public String error() {
+        return "登录失败";
+    }
 
-    @PostMapping("/main")
-    public String main(){
-        return "redirect:main.html";
+    @GetMapping("/test")
+    public String test() {
+        return "test";
     }
 }

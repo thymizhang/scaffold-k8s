@@ -14,7 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
- * 自定义Security用户认证逻辑
+ * 自定义Security用户认证逻辑<br/>
+ * 覆盖UserDetailsService.loadUserByUsername方法，改写用户认证逻辑
  *
  * @Author thymi
  * @Date 2021/3/9
@@ -33,30 +34,30 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     /**
-     * 从业务数据库中找到user, 并与UserDetails进行对接
+     * 从用户服务中获取密码和权限，交给spring-security去验证<br/>
+     * 技术要点：<br/>
+     * 1 请求类型必须是POST；<br/>
+     * 2 用户名和密码参数默认是：username和password，可以在SecurityConfig中指定；<br/>
+     * 参考：UsernamePasswordAuthenticationFilter<br/>
      *
-     * @param userName 用户名
+     * @param username 用户名
      * @return org.springframework.security.core.userdetails.User
      * @throws UsernameNotFoundException 找不到用户
      */
     @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        log.info("执行自定义登录");
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        log.info("自定义登录逻辑已执行");
 
         /* 查询用户 */
-        UserLoginDto userLoginDto = userRestFeign.login(userName);
+        UserLoginDto userLoginDto = userRestFeign.login(username);
 
         if (userLoginDto == null) {
             throw new UsernameNotFoundException(UserErrorCode.A0201.getErrorDesc());
-        }
-
-        if (userLoginDto != null) {
-            // todo: 这里获取权限
-            /* 注意这里返回的是org.springframework.security.core.userdetails.User */
-            return new User(userName, userLoginDto.getPassword(), AuthorityUtils.createAuthorityList("admin,normal"));
         } else {
-            /* 如果查不到用户, 返回null, 由provider来抛出异常 */
-            return null;
+            // todo: 这里获取权限
+            /* 将密码和权限取出，交给spring-security去验证，注意这里返回的是org.springframework.security.core.userdetails.User */
+            /* AuthorityUtils.createAuthorityList包含了角色和权限，”ROLE_“前缀是角色 */
+            return new User(username, userLoginDto.getPassword(), AuthorityUtils.createAuthorityList("admin","normal","ROLE_LEADER"));
         }
     }
 }
