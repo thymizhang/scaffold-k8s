@@ -74,6 +74,14 @@ public class ResponseDataUtil {
     }
 
     /**
+     * 返回默认授权失败（禁止访问）信息403
+     * @return {@link ResponseData ResponseData}
+     */
+    public static ResponseData buildForbidden() {
+        return new ResponseData(ResultEnums.FORBIDDEN);
+    }
+
+    /**
      * 返回服务器繁忙信息429
      *
      * @return {@link ResponseData ResponseData}
