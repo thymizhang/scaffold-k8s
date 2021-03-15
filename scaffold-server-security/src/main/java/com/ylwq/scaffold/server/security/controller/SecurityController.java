@@ -1,6 +1,8 @@
 package com.ylwq.scaffold.server.security.controller;
 
 import com.ylwq.scaffold.server.security.feign.UserRestFeign;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,8 +31,15 @@ public class SecurityController {
         return "登录失败";
     }
 
+    @Secured("ROLE_LEADER")
     @GetMapping("/test")
     public String test() {
         return "test";
+    }
+
+    @PreAuthorize("hasAuthority('admin')")
+    @GetMapping("/pre")
+    public String preAuthorize() {
+        return "方法执行前判断权限@PreAuthorize";
     }
 }

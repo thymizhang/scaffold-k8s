@@ -3,7 +3,7 @@ package com.ylwq.scaffold.server.security;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
 /**
  * 认证授权服务器
@@ -13,9 +13,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  */
 @SpringBootApplication
 @EnableFeignClients
-@EnableScheduling
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SecurityApplication {
     public static void main(String[] args) {
-        SpringApplication.run(SecurityApplication.class,args);
+        SpringApplication.run(SecurityApplication.class, args);
     }
 }

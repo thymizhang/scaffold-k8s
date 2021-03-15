@@ -1,12 +1,8 @@
 package com.ylwq.scaffold.server.security.config;
 
 import com.ylwq.scaffold.server.security.handler.LoginAccessDeniedHandler;
-import com.ylwq.scaffold.server.security.handler.LoginAuthenticationFailureHandler;
-import com.ylwq.scaffold.server.security.handler.LoginAuthenticationSuccessHandler;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -66,39 +62,45 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("username")
                 /* 自定义密码参数 */
                 .passwordParameter("password")
-                /* 登录请求接口 只接受POST请求 不要改 */
-                .loginProcessingUrl("/login")
                 /* 登录成功后跳转 只接受POST请求 */
                 /*.successForwardUrl("/toMain")*/
                 /* 登录成功后跳转自定义url，非post请求，不能与successForwardUrl同时使用 */
-                .successHandler(new LoginAuthenticationSuccessHandler("/main.html"))
+                /*.successHandler(new LoginAuthenticationSuccessHandler("/main.html"))*/
                 /* 登录失败后跳转 只接受POST请求 */
                 /*.failureForwardUrl("/toError")*/
                 /* 登录失败后跳转自定义url，非post请求，不能与failureForwardUrl同时使用 */
-                .failureHandler(new LoginAuthenticationFailureHandler("/error.html"));
+                /*.failureHandler(new LoginAuthenticationFailureHandler("/error.html"));*/
+                /* 登录请求接口 只接受POST请求 不要改 */
+                .loginProcessingUrl("/login");
+
+        /* 退出登录 */
+        http.logout()
+                /* 退出登录后跳转的页面，配置该页面后，url不再带有?logout参数 */
+                .logoutSuccessUrl("/login.html");
+
 
         /* 访问授权，设置顺序：antMatchers -> anyRequest */
         http.authorizeRequests()
                 /* 放行login.html、error.html */
                 .antMatchers("/login.html", "/error.html").permitAll()
-                /* 放行image目录下所有文件*/
+                /* 放行image目录下所有文件 */
                 .antMatchers("/image/**").permitAll()
-                /* 放行所有目录下的png文件*/
+                /* 放行所有目录下的png文件 */
                 .antMatchers("/**/*.png").permitAll()
                 /* 正则表达式，放行所有png文件，默认任意请求类型 */
                 .regexMatchers(".+[.]png").permitAll()
                 /* 正则表达式，放行test请求，请求类型：GET */
-                .regexMatchers(HttpMethod.GET, "/test").permitAll()
+                /*.regexMatchers(HttpMethod.GET, "/test").permitAll()*/
                 /* 只有admin或normal权限(严格区分大小写)，才能访问admin.html页面 */
-                .antMatchers("/admin.html").hasAnyAuthority("admin", "normal")
+                /*.antMatchers("/admin.html").hasAnyAuthority("admin", "normal")*/
                 /* 只有LEADER角色(注意不要加上ROLE_前缀)，才能访问admin.html页面 */
-                .antMatchers("/leader.html").hasAnyRole("LEADER")
-                /* 只有ip地址127.0.0.1可以访问 */
-                .antMatchers("/leader.html").hasIpAddress("127.0.0.1")
+                /*.antMatchers("/leader.html").hasRole("LEADER")*/
+                /* 只有ip地址127.0.0.1可以访问，注意如果同时配置了角色，只能生效后配置的一个 */
+                /*.antMatchers("/leader.html").hasIpAddress("127.0.0.1")*/
                 /* 所有请求必须登录才能访问，anyRequest必须放在最后 */
                 .anyRequest().authenticated();
 
-        /* 没有授权403异常处理 */
+        /* 自定义没有授权403异常处理 */
         http.exceptionHandling()
                 .accessDeniedHandler(this.loginAccessDeniedHandler);
 
