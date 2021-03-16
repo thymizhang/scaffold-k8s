@@ -54,6 +54,13 @@
 java -Dport=8080 -Dfile.encoding=UTF-8 -jar xxx.jar --spring.profiles.active=dev
 ```
 
+## 数据库
+* 手动创建以下数据库，并运行对应脚本
+1. scaffold_user : scaffold_user.sql
+2. scaffold_company : scaffold_company.sql
+3. scaffold_project_0 : scaffold_project.sql
+4. scaffold_project_1 : scaffold_project.sql
+
 ## 打包说明
 
 1. 子模块打包找不到依赖时，先maven install父工程；
