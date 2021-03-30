@@ -26,4 +26,9 @@ public class UserLoginDto {
      * 登录密码
      */
     String password;
+
+    /**
+     * 权限
+     */
+    String permission;
 }

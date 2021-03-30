@@ -59,6 +59,11 @@ public class UserInfo {
     String password;
 
     /**
+     * 用户权限<br/>
+     */
+    String permission;
+
+    /**
      * 是否删除<br/>
      * 为MyBatisPlus配置逻辑删除<br/>
      * 1 在yml中配置logic-not-delete-value和logic-delete-value<br/>
