@@ -64,6 +64,7 @@ public class ResponseDataUtil {
         return new ResponseData(ResultEnums.FAILD, data);
     }
 
+
     /**
      * 返回默认认证失败信息401
      *
@@ -74,10 +75,44 @@ public class ResponseDataUtil {
     }
 
     /**
+     * 返回默认认证失败信息401，及错误数据
+     *
+     * @param data 错误数据
+     * @return {@link ResponseData ResponseData}
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> ResponseData buildUnAuthorized(T data) {
+        return new ResponseData(ResultEnums.UNAUTHORIZED, data);
+    }
+
+    /**
+     * 返回默认认证失败信息401，及错误信息和数据
+     *
+     * @param msg  错误信息
+     * @param data 错误数据
+     * @return {@link ResponseData ResponseData}
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> ResponseData buildUnAuthorized(String msg, T data) {
+        return new ResponseData(ResultEnums.UNAUTHORIZED, msg, data);
+    }
+
+    /**
      * 返回默认授权失败（禁止访问）信息403
+     *
      * @return {@link ResponseData ResponseData}
      */
     public static ResponseData buildForbidden() {
+        return new ResponseData(ResultEnums.FORBIDDEN);
+    }
+
+    /**
+     * 返回默认授权失败（禁止访问）信息403，及错误数据
+     *
+     * @param data 错误数据
+     * @return {@link ResponseData ResponseData}
+     */
+    public static <T> ResponseData buildForbidden(T data) {
         return new ResponseData(ResultEnums.FORBIDDEN);
     }
 
@@ -100,7 +135,18 @@ public class ResponseDataUtil {
     }
 
     /**
-     * 返回系统异常信息500
+     * 返回系统异常信息500，异常数据
+     *
+     * @param data 异常数据
+     * @return {@link ResponseData ResponseData}
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> ResponseData buildError(T data) {
+        return new ResponseData(ResultEnums.ERROR, data);
+    }
+
+    /**
+     * 返回系统异常信息500，异常信息
      *
      * @param msg 自定义信息
      * @return {@link ResponseData ResponseData}

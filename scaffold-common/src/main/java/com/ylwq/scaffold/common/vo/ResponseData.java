@@ -15,7 +15,7 @@ import java.io.Serializable;
  */
 @Data
 @NoArgsConstructor
-@ApiModel(value = "ResponseData",description = "统一返回对象")
+@ApiModel(value = "ResponseData", description = "统一返回对象")
 public class ResponseData<T> implements Serializable {
 
     /**
@@ -64,4 +64,9 @@ public class ResponseData<T> implements Serializable {
         this.data = data;
     }
 
+    public ResponseData(ResultEnums resultEnums, String msg, T data) {
+        this.code = resultEnums.getCode();
+        this.message = msg;
+        this.data = data;
+    }
 }
