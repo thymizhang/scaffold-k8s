@@ -21,9 +21,9 @@ public class ScheduleJobs {
     /**
      * 间隔定时任务，单位：ms
      */
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 1800000)
     public void fixedRateJob() {
-        log.info("[" + serviceName + "]定时任务：每间隔60秒执行一次");
+        log.info("[" + serviceName + "]定时任务：每间隔30分钟执行一次");
     }
 
     @Scheduled(cron = "0 0,6 0,18 ? * ? ")
