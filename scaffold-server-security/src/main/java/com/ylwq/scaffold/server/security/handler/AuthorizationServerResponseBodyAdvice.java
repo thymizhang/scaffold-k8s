@@ -50,9 +50,9 @@ public class AuthorizationServerResponseBodyAdvice implements ResponseBodyAdvice
         if (body instanceof DefaultOAuth2AccessToken) {
             DefaultOAuth2AccessToken token = (DefaultOAuth2AccessToken) body;
             Map<String, String> tokenInfo = new HashMap<>(3);
-            tokenInfo.put("token", token.getValue());
-            tokenInfo.put("refresh_token", token.getRefreshToken().getValue());
             tokenInfo.put("expiresIn", String.valueOf(token.getExpiresIn()));
+            tokenInfo.put("refresh_token", token.getRefreshToken().getValue());
+            tokenInfo.put("token", token.getValue());
             return ResponseDataUtil.buildSuccess(tokenInfo);
         }
 

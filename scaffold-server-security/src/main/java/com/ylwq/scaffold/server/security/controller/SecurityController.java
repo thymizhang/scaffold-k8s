@@ -1,5 +1,7 @@
 package com.ylwq.scaffold.server.security.controller;
 
+import com.ylwq.scaffold.common.util.ResponseDataUtil;
+import com.ylwq.scaffold.common.vo.ResponseData;
 import com.ylwq.scaffold.server.security.feign.UserRestFeign;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,14 +33,25 @@ public class SecurityController {
         return "登录失败";
     }
 
+    /**
+     * 获取Oauth2授权码
+     *
+     * @param code 授权码
+     * @return
+     */
+    @GetMapping("/authorizeCode")
+    public ResponseData<String> getAuthorizeCode(String code) {
+        return ResponseDataUtil.buildSuccess(code);
+    }
+
     @Secured("ROLE_LEADER")
-    @GetMapping("/test")
+    @GetMapping("/api/test")
     public String test() {
         return "test";
     }
 
     @PreAuthorize("hasAuthority('admin')")
-    @GetMapping("/pre")
+    @GetMapping("/api/pre")
     public String preAuthorize() {
         return "方法执行前判断权限@PreAuthorize";
     }
