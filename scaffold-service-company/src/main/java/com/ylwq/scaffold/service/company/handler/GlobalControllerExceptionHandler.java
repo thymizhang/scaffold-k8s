@@ -7,6 +7,7 @@ import com.ylwq.scaffold.common.util.ResponseDataUtil;
 import com.ylwq.scaffold.common.vo.ResponseData;
 import com.ylwq.scaffold.common.vo.ResultEnums;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -24,10 +25,10 @@ import java.util.stream.Collectors;
 /**
  * 全局异常处理类，每个微服务都需要配置
  * <p>
- * OpenApi会解析@RestControllerAdvice注解的类，在response中会显示这些异常定义：400/404/500
+ * OpenApi会解析@RestControllerAdvice注解的类，在response中会显示这些异常定义：400/401/403/500
  *
  * @Author thymi
- * @Date 2021/3/4
+ * @Date 2021/3/31
  */
 @RestControllerAdvice
 public class GlobalControllerExceptionHandler {
@@ -58,6 +59,12 @@ public class GlobalControllerExceptionHandler {
     public ResponseData handleException(Exception e) {
         e.printStackTrace();
         return ResponseDataUtil.buildError(ResultEnums.ERROR.getMessage());
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseData handleAccessDeniedException(AccessDeniedException e) {
+        return ResponseDataUtil.buildForbidden();
     }
 
     /**
