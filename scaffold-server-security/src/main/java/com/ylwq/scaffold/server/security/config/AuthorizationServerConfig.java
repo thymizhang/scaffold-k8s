@@ -70,8 +70,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     /**
      * jwt令牌转换器，将普通令牌转换为jwt令牌
      * 使用场景：jwt自带用户信息，资源服务器就不用每次去认证服务器校验令牌
-     * 认证授权服务器：转换器需要配置到AuthorizationServerEndpointsConfigurer
-     * 资源服务器：转换器需要配置到TokenStore，再将TokenStore配置到ResourceServerConfig.ResourceServerSecurityConfigurer
+     * 认证服务器：转换器需要配置到AuthorizationServerConfig.configure(AuthorizationServerEndpointsConfigurer endpoints)
+     * 资源服务器：转换器需要配置到ResourceServerConfig.tokenStore()
      *
      * @return JwtAccessTokenConverter
      */
