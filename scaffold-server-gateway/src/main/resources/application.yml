@@ -48,6 +48,10 @@ spring:
           uri: lb://service-project
           predicates:
             - Path=/api/project/**
+        - id: server-security
+          uri: lb://server-security
+          predicates:
+            - Path=/oauth/**
 
 ---
 
