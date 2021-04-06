@@ -139,8 +139,14 @@
             <!-- 国产工具类，啥都有 -->
             <dependency>
                 <groupId>cn.hutool</groupId>
-                <artifactId>hutool-core</artifactId>
-                <version>5.5.9</version>
+                <artifactId>hutool-all</artifactId>
+                <version>5.6.2</version>
+            </dependency>
+            <!-- JWT令牌解析工具 -->
+            <dependency>
+                <groupId>com.nimbusds</groupId>
+                <artifactId>nimbus-jose-jwt</artifactId>
+                <version>9.7</version>
             </dependency>
             <!-- 代码简化，常用：@Data @Slf4j -->
             <dependency>
