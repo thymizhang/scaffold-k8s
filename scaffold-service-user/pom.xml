@@ -33,6 +33,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- 配置oauth2资源服务器-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-oauth2</artifactId>
+        </dependency>
         <!-- 服务注册与发现 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
@@ -42,6 +47,11 @@
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+        <!-- Redis客户端Lettuce的连接池，spring-security需要redis管理令牌 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
         </dependency>
         <!-- *** 数据库相关 *** -->
         <dependency>

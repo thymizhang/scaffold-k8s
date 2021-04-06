@@ -33,6 +33,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- 配置oauth2资源服务器-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-oauth2</artifactId>
+        </dependency>
         <!-- 服务注册与发现 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
@@ -44,11 +49,6 @@
 <!--                    <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>-->
 <!--                </exclusion>-->
 <!--            </exclusions>-->
-        </dependency>
-        <!-- 配置中心 -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
         <!-- 服务间调用 -->
         <dependency>
@@ -68,7 +68,7 @@
         <!-- 测试时使用 -->
         <dependency>
             <groupId>cn.hutool</groupId>
-            <artifactId>hutool-core</artifactId>
+            <artifactId>hutool-all</artifactId>
             <scope>test</scope>
         </dependency>
         <!-- *** 数据库相关 *** -->

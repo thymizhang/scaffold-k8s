@@ -1,5 +1,8 @@
 package com.ylwq.scaffold.service.company.controller;
 
+import cn.hutool.core.convert.Convert;
+import cn.hutool.json.JSONObject;
+import com.nimbusds.jose.JWSObject;
 import com.scaffold.service.company.api.CompanyRestApi;
 import com.scaffold.service.company.dto.CompanyInfoDto;
 import com.ylwq.scaffold.common.util.ResponseDataUtil;
@@ -9,9 +12,15 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.Size;
+import java.security.Principal;
+import java.text.ParseException;
 
 /**
  * 公司服务接口，使用统一对象返回给前端<br/>
@@ -49,9 +58,43 @@ public class CompanyController {
     })
     @SuppressWarnings("unchecked")
     @GetMapping("/{companyId}")
+    @PreAuthorize("hasAnyAuthority('test','user')")
     public ResponseData<CompanyInfoDto> getCompany(@PathVariable(value = "companyId") String companyId) {
         CompanyInfoDto company = companyRestApi.getCompany(companyId);
         return ResponseDataUtil.buildSuccess(company);
+    }
+
+    @GetMapping("/principal")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseData getPrincipal(Principal principal){
+        return ResponseDataUtil.buildSuccess(principal);
+    }
+
+    @GetMapping("/user")
+    @Secured("ROLE_ADMIN")
+    public ResponseData getUser(Authentication authentication){
+        return ResponseDataUtil.buildSuccess(authentication.getPrincipal());
+    }
+
+    @GetMapping("/jwt")
+    @Secured("ROLE_ADMIN")
+    public ResponseData getJwt(HttpServletRequest httpServletRequest){
+        String token = httpServletRequest.getHeader("Authorization");
+        String realToken = token.replace("Bearer ", "");
+        String userStr = "";
+        UserInfoDto userInfoDto = new UserInfoDto();
+        try {
+            JWSObject jwsObject = JWSObject.parse(realToken);
+            userStr = jwsObject.getPayload().toString();
+
+            JSONObject jsonObject = new JSONObject(userStr);
+            userInfoDto.setId(Convert.toLong(jsonObject.getStr("user_id")));
+            userInfoDto.setUserName(jsonObject.getStr("user_name"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return ResponseDataUtil.buildError(e.getMessage());
+        }
+        return ResponseDataUtil.buildSuccess(userInfoDto);
     }
 
     @ApiOperation("微服务接口调用测试")
