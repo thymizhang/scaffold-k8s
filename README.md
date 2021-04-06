@@ -7,8 +7,8 @@
 ## 项目介绍
 
 1. scaffold-common : 公共工程，抽象和实现各类工具，技术要点：自定义异常和错误码，统一返回状态码规则，全局异常处理；
-2. scaffold-server-security : 认证授权，基于Spring-Security-Oauth2认证授权框架、JWT无状态令牌实现、Gateway整合鉴权；
-3. scaffold-server-gateway : 服务网关，技术要点：网关路由配置、SpringFox在线文档聚合、Sentinel限流与熔断、统一认证；
+2. scaffold-server-security : 认证授权，基于Spring-Security-Oauth2认证授权框架、JWT无状态令牌实现；
+3. scaffold-server-gateway : 服务网关，技术要点：网关路由配置、SpringFox在线文档聚合、Sentinel限流与熔断、基于JWT的统一鉴权；
 4. scaffold-service-company : 公司微服务，技术要点：微服务接口定义原则、服务间调用、SpringFox在线文档配置、定时任务；
 5. scaffold-service-company-api : 公司微服务接口，面向其他微服务提供接口依赖；
 6. scaffold-service-project : 项目微服务，技术要点：Sharding-jdbc分库分表应用、Redis缓存应用、Spring-AMQP+RabbitMq消息应用、分布式事务；
@@ -60,6 +60,7 @@ java -Dport=8080 -Dfile.encoding=UTF-8 -jar xxx.jar --spring.profiles.active=dev
 2. scaffold_company : scaffold_company.sql
 3. scaffold_project_0 : scaffold_project.sql
 4. scaffold_project_1 : scaffold_project.sql
+5. scaffold_oauth2 : scaffold_oauth2.sql  
 
 ## 打包说明
 
