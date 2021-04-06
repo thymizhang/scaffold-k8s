@@ -43,6 +43,7 @@ public class AuthorizationGlobalFilter implements GlobalFilter, Ordered {
             List<String> authorization = headers.get("Authorization");
             /* 获取jwt令牌 */
             String token = authorization.get(0);
+            /* 没有令牌，返回未认证状态401 */
             if(token == null){
                 /* 响应状态码 */
                 response.setStatusCode(HttpStatus.UNAUTHORIZED);
@@ -76,7 +77,7 @@ public class AuthorizationGlobalFilter implements GlobalFilter, Ordered {
                     return chain.filter(exchange);
                 }
 
-                /* scope校验失败，返回403 */
+                /* scope校验失败，返回未授权状态403 */
                 response.setStatusCode(HttpStatus.FORBIDDEN);
                 /* 响应内容 */
                 ResponseData responseData = ResponseDataUtil.buildForbidden();
