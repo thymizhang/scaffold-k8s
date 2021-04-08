@@ -9,12 +9,11 @@
 1. scaffold-common : 公共工程，抽象和实现各类工具，技术要点：自定义异常和错误码，统一返回状态码规则，全局异常处理；
 2. scaffold-server-security : 认证授权，基于Spring-Security-Oauth2认证授权框架、JWT无状态令牌实现；
 3. scaffold-server-gateway : 服务网关，技术要点：网关路由配置、SpringFox在线文档聚合、Sentinel限流与熔断、基于JWT的统一鉴权；
-4. scaffold-service-company : 公司微服务，技术要点：微服务接口定义原则、服务间调用、SpringFox在线文档配置、定时任务；
-5. scaffold-service-company-api : 公司微服务接口，面向其他微服务提供接口依赖；
+4. scaffold-service-user : 用户微服务，技术要点：服务配置、Nacos配置中心应用、Json数据处理、Mybatis-plus应用、参数校验及全局捕获；
+5. scaffold-service-company : 公司微服务，技术要点：微服务接口定义原则、服务间调用、SpringFox在线文档配置、定时任务；
 6. scaffold-service-project : 项目微服务，技术要点：Sharding-jdbc分库分表应用、Redis缓存应用、Spring-AMQP+RabbitMq消息应用、分布式事务；
-7. scaffold-service-project-api : 项目微服务接口，面向其他微服务提供接口依赖；
-8. scaffold-service-user : 用户微服务，技术要点：服务配置、Nacos配置中心应用、Json数据处理、Mybatis-plus应用、参数校验及全局捕获；
-9. scaffold-service-user-api : 用户微服务接口，面向其他微服务提供接口依赖； 注意：server和service工程均可独立打包部署，每个微服务需要独立配置数据库；
+7. scaffold-service-xxxx-api : 微服务接口，面向其他微服务提供业务依赖；
+* 注意：server和service工程均可独立打包部署，每个微服务需要独立配置数据库；
 
 ## 应用分层
 
@@ -33,7 +32,7 @@
 - 操作系统: Window10 20H2
 - 开发工具: Idea 2020.3
 - java环境: JDK11
-- k8s环境: minikube 1.12.3
+- k8s环境: minikube 1.18.1
 - 持续集成:
 - 持续交付:
 
@@ -44,7 +43,7 @@
 1. JDK 11.0.8
 2. MySQL 8.0.21
 3. Redis 6.0.8
-4. RabbitMQ 3.8.9
+4. RabbitMQ 3.8.14
 5. Nacos 1.4.1
 6. Sentinel 1.8.1
 
