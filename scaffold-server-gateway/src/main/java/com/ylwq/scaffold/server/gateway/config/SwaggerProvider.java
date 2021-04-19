@@ -40,14 +40,17 @@ public class SwaggerProvider implements SwaggerResourcesProvider {
     @Override
     public List<SwaggerResource> get() {
         List<SwaggerResource> resources = new ArrayList<>();
-        List<String> routeHosts = new ArrayList<>();
+        //List<String> routeHosts = new ArrayList<>();
+        Set<String> routeHosts = new HashSet<>();
         routeLocator.getRoutes()
                 .filter(route -> route.getUri().getHost() != null)
-                .filter(route -> route.getUri().getHost() != null)
                 .filter(route -> Objects.equals(route.getUri().getScheme(), "lb"))
-                /* 过滤掉网关自身的服务  uri中的host就是服务id */
-                .filter(route -> !self.equalsIgnoreCase(route.getUri().getHost()))
                 .subscribe(route -> routeHosts.add(route.getUri().getHost()));
+
+        /* 过滤掉网关服务器，如果服务器名更新这里也需要同步更新 */
+        routeHosts.remove("server-gateway");
+        /* 过滤掉认证服务器，如果服务器名更新这里也需要同步更新 */
+        routeHosts.remove("server-security");
 
         /* 记录已经添加过的微服务，存在同一个微服务注册了多个服务在注册中心上 */
         Set<String> serverUrls = new HashSet<>();
