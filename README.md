@@ -146,8 +146,7 @@ java -Dport=8080 -Dfile.encoding=UTF-8 -jar xxx.jar --spring.profiles.active=dev
 
 > 1. mybatis-plus在控制输出信息时：yml配置比properties完整，yml配置输出信息包含数据源信息；
 
-*
-微服务启动告警：`Spring Cloud LoadBalancer is currently working with the default cache. You can switch to using Caffeine cache, by adding it to the classpath.`
+* 微服务启动告警：`Spring Cloud LoadBalancer is currently working with the default cache. You can switch to using Caffeine cache, by adding it to the classpath.`
 
 > 解决：添加Caffeine依赖
 > ```xml
@@ -156,6 +155,31 @@ java -Dport=8080 -Dfile.encoding=UTF-8 -jar xxx.jar --spring.profiles.active=dev
 >             <artifactId>caffeine</artifactId>
 >         </dependency>
 > ```
+
+* 镜像构建报错：`no main manifest attribute, in application.jar`  
+
+> 解决：在打包插件中声明execution
+> ```xml
+>                <plugin>
+>                    <!-- 打可执行包插件声明，包括jar、war、docker镜像等，微服务子模块必须要声明该插件 -->
+>                    <groupId>org.springframework.boot</groupId>
+>                    <artifactId>spring-boot-maven-plugin</artifactId>
+>                    <version>2.3.9.RELEASE</version>
+>                    <configuration>
+>                        <layers>
+>                            <enabled>true</enabled>
+>                        </layers>
+>                    </configuration>
+>                    <executions>
+>                        <execution>
+>                            <goals>
+>                                <goal>repackage</goal>
+>                            </goals>
+>                        </execution>
+>                    </executions>
+>                </plugin>
+> ```
+
 
 ## 升级日志
 
