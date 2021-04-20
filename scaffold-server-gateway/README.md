@@ -172,8 +172,10 @@ springfox:
 
 
 ### 四、统一认证集成
+* 思路：由于gateway使用的时webflux引擎，深度整合security改造量巨大，所以这里我们采用全局过滤器进行sope级别的鉴权。如果需要深度整合，建议采用zuul网关。
+* 方案：在网关全局过滤器中解析JWT，对微服务sope进行鉴权，参见：[`AuthorizationGlobalFilter.java`](/src/main/java/com/ylwq/scaffold/server/gateway/filter/AuthorizationGlobalFilter.java)
 
-* 思路：
+
 
 ### 问题
 
