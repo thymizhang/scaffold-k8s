@@ -34,11 +34,12 @@ public class AuthorizationGlobalFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         String path = exchange.getRequest().getURI().getPath();
         String oauthPath = "/oauth";
+        String swaggerPath = "/v3/api-docs";
         ServerHttpResponse response = exchange.getResponse();
         /* 响应头 */
         response.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
-        /* 对非oauth2请求，进行token校验 */
-        if (!path.startsWith(oauthPath)) {
+        /* 对oauth2和swagger请求，不进行token校验 */
+        if (!(path.startsWith(oauthPath) || path.endsWith(swaggerPath))) {
             HttpHeaders headers = exchange.getRequest().getHeaders();
             List<String> authorization = headers.get("Authorization");
             /* 获取jwt令牌 */
@@ -96,5 +97,4 @@ public class AuthorizationGlobalFilter implements GlobalFilter, Ordered {
     public int getOrder() {
         return 0;
     }
-
 }
