@@ -6,14 +6,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.builders.*;
 import springfox.documentation.schema.ScalarType;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.ParameterType;
-import springfox.documentation.service.RequestParameter;
-import springfox.documentation.service.Response;
+import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.contexts.SecurityContext;
+import springfox.documentation.spi.service.contexts.SecurityContextBuilder;
 import springfox.documentation.spring.web.plugins.Docket;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -30,6 +30,16 @@ public class SpringfoxConfig implements WebMvcConfigurer {
         /* 返回文档摘要信息 */
         return new Docket(DocumentationType.OAS_30)
                 .apiInfo(apiInfo())
+                /* 显示填写token参数 */
+                .securitySchemes(Collections.singletonList(HttpAuthenticationScheme.JWT_BEARER_BUILDER.name("token").build()))
+                .securityContexts(Collections.singletonList(SecurityContext.builder()
+                        .securityReferences(Collections.singletonList(SecurityReference.builder()
+                                .scopes(new AuthorizationScope[0])
+                                .reference("token")
+                                .build()))
+                        /* 声明作用域 */
+                        .operationSelector(o -> o.requestMappingPattern().matches("/.*"))
+                        .build()))
                 .select()
                 /* 只显示ApiOperation标注的api，同时避免显示basic-error-controller */
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
