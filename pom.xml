@@ -64,7 +64,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>2.3.9.RELEASE</version>
+                <version>2.3.10.RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -72,7 +72,7 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>Hoxton.SR10</version>
+                <version>Hoxton.SR11</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -140,13 +140,13 @@
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
-                <version>5.6.2</version>
+                <version>5.6.3</version>
             </dependency>
             <!-- JWT令牌解析工具 -->
             <dependency>
                 <groupId>com.nimbusds</groupId>
                 <artifactId>nimbus-jose-jwt</artifactId>
-                <version>9.7</version>
+                <version>9.8.1</version>
             </dependency>
             <!-- 代码简化，常用：@Data @Slf4j -->
             <dependency>
@@ -194,7 +194,7 @@
                     <!-- 打可执行包插件声明，包括jar、war、docker镜像等，微服务子模块必须要声明该插件 -->
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>2.3.9.RELEASE</version>
+                    <version>2.3.10.RELEASE</version>
                     <configuration>
                         <layers>
                             <enabled>true</enabled>
