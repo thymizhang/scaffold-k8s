@@ -65,9 +65,7 @@ java -Dport=8080 -Dfile.encoding=UTF-8 -jar xxx.jar --spring.profiles.active=dev
 
 1. 子模块打包找不到依赖时，先maven install父工程；
 2. spring-boot应用中，当有多个类包含main方法时，需要指定一个mainClass；
-
 ```xml
-
 <build>
     <plugins>
         <plugin>
@@ -80,7 +78,6 @@ java -Dport=8080 -Dfile.encoding=UTF-8 -jar xxx.jar --spring.profiles.active=dev
     </plugins>
 </build>
 ```
-
 3. spring-boot应用中，既要打可执行包又需要非可执行包的方式；
 
 ```xml
@@ -97,6 +94,7 @@ java -Dport=8080 -Dfile.encoding=UTF-8 -jar xxx.jar --spring.profiles.active=dev
     </plugins>
 </build>
 ```
+
 
 ## 版本操作
 
@@ -116,6 +114,10 @@ java -Dport=8080 -Dfile.encoding=UTF-8 -jar xxx.jar --spring.profiles.active=dev
 > 说明：确认后会自动删除`pom.xml.versionsBackup`文件
 
 ## 问题
+
+* 程序包XXX不存在  
+> 在Reload all maven projects之后，File -> Invalidate Caches...  
+> 参考：https://baijiahao.baidu.com/s?id=1666135264347817292&wfr=spider&for=pc  
 
 * 项目中maven依赖报红的处理
 
