@@ -66,7 +66,7 @@ public class UserRestController implements UserRestApi {
     /**
      * 服务调用地址
      */
-    @Value("${rpc.service.user.url}")
+    @Value("${service.user.provider.url}")
     private String serviceUrl;
 
     final
