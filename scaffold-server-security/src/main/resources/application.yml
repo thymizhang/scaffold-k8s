@@ -48,3 +48,11 @@ springfox:
   documentation:
     swagger-ui:
       enabled: false # 关闭swagger在线文档
+
+---
+
+service:
+  user:
+    provider:
+      name: service-user  # 微服务调用名称
+      url:                # 微服务调用地址
