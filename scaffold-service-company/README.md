@@ -25,9 +25,9 @@ public interface UserRestApi {
     UserInfoDto getUserInfo(@PathVariable(value = "userId") String userId);
 }
 ```
-2. 微服务间互相调用通过Feign方式，Feign接口需要继承RestApi，并声明`@FeignClient`；
+2. 微服务间互相调用通过Feign方式，Feign接口需要继承RestApi，并声明`@FeignClient`，name和url在配置文件中声明；
 ```java
-@FeignClient(value = "service-user")
+@FeignClient(name = "${service.user.provider.name}", url = "${service.user.provider.url}")
 public interface UserRestFeign extends UserRestApi {
 }
 ```
