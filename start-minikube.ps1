@@ -1,0 +1,1 @@
+minikube start --registry-mirror=https://nw6rhy9r.mirror.aliyuncs.com
