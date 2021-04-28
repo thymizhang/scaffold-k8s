@@ -4,11 +4,10 @@
 
 ## 技术要点
 
-一、spring-cloud-gateway配置；
-二、服务限流sentinel集成；
-三、在线文档springfox集成；
-四、统一认证集成；
-五、统一访问日志记录；
+一、spring-cloud-gateway配置；  
+二、服务限流sentinel集成；  
+三、在线文档springfox集成；  
+四、统一认证集成；  
 
 
 ### 一、spring-cloud-gateway配置
@@ -175,6 +174,11 @@ springfox:
 * 思路：由于gateway使用的时webflux引擎，深度整合security改造量巨大，所以这里我们采用全局过滤器进行sope级别的鉴权。如果需要深度整合，建议采用zuul网关。
 * 方案：在网关全局过滤器中解析JWT，对微服务sope进行鉴权，参见：[`AuthorizationGlobalFilter.java`](/src/main/java/com/ylwq/scaffold/server/gateway/filter/AuthorizationGlobalFilter.java)
 
+
+### 结论
+* spring-cloud-gateway分析
+> 优点：底层采用netty，性能好；配置相对简单；可与sentinel等限流工具整合，扩展限流能力；与nginx或ingress结合可实现网关高可用。  
+> 缺点：与spring-security缺乏整合方案，实现接口级鉴权太复杂。  
 
 
 ### 问题
