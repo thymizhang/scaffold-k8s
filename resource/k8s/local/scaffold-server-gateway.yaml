@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scaffold-server-gateway
+  labels:
+    app: scaffold-server-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: scaffold-server-gateway
+  template:
+    metadata:
+      labels:
+        app: scaffold-server-gateway
+    spec:
+      containers:
+        - name: scaffold-server-gateway
+          image: registry.cn-hangzhou.aliyuncs.com/thymizhang/scaffold-server-gateway:1.0.0
+          imagePullPolicy: IfNotPresent
+          livenessProbe: #存活探针
+            tcpSocket:
+              port: 9000
+            initialDelaySeconds: 30 #等待30秒开始检查
+            periodSeconds: 60 #每60秒检查一次
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: server-gateway
+  labels:
+    app: server-gateway
+    group: scaffold
+spec:
+  ports:
+    - name: http
+      port: 9000
+      targetPort: 9000  #pod的端口, 可以不填, 默认就是port的值
+      nodePort: 31000 #对k8s集群暴露的端口
+  selector:
+    app: scaffold-server-gateway #路由规则: 匹配pod中的labels标签
+  type: NodePort

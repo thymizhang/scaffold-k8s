@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scaffold-service-user
+  labels:
+    app: scaffold-service-user
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: scaffold-service-user
+  template:
+    metadata:
+      labels:
+        app: scaffold-service-user
+    spec:
+      containers:
+        - name: scaffold-service-user
+          image: registry.cn-hangzhou.aliyuncs.com/thymizhang/scaffold-service-user:1.0.0
+          imagePullPolicy: IfNotPresent
+          readinessProbe: #就绪探针
+            httpGet:
+              path: /actuator/health #需要依赖spring-boot-starter-actuator
+              port: 8082 #k8s内部端口
+            initialDelaySeconds: 10 #等待10秒开始检查
+          livenessProbe: #存活探针
+            tcpSocket:
+              port: 8082
+            initialDelaySeconds: 30 #等待30秒开始检查
+            periodSeconds: 60 #每60秒检查一次
+---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: service-user
+#  labels:
+#    app: service-user
+#    group: scaffold
+#spec:
+#  ports:
+#    - name: http
+#      port: 8082
+#      targetPort: 8082  #pod的端口, 可以不填, 默认就是port的值
+#      nodePort: 31082 #对k8s集群暴露的端口
+#  selector:
+#    app: scaffold-service-user #路由规则: 匹配pod中的labels标签
+#  type: NodePort
