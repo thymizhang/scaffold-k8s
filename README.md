@@ -30,11 +30,10 @@
 ## 开发环境
 
 - 操作系统: Window10 20H2
-- 开发工具: Idea 2020.3
+- 开发工具: Idea 2021.1
 - java环境: JDK11
-- k8s环境: minikube 1.18.1
-- 持续集成:
-- 持续交付:
+- 本地k8s环境: minikube 1.18.1
+- 公网k8s环境：Aliyun ACK
 
 ## 运行环境及部署
 
@@ -44,7 +43,7 @@
 2. MySQL 8.0.21
 3. Redis 6.0.8
 4. RabbitMQ 3.8.14
-5. Nacos 1.4.1
+5. Nacos 2.0.0
 6. Sentinel 1.8.1
 
 * 命令行启动(windows环境下需要指定编码)
@@ -52,6 +51,10 @@
 ```
 java -Dport=8080 -Dfile.encoding=UTF-8 -jar xxx.jar --spring.profiles.active=dev
 ```
+
+* 部署项目到kubernetes环境  
+包括本地k8s环境（minikube）部署和阿里云ACK部署，详情参考[k8s部署](resource/k8s/README.md)
+
 
 ## 数据库
 * 手动创建以下数据库，并运行对应脚本
