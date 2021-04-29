@@ -70,6 +70,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                /* 放行健康检查接口 */
+                .antMatchers("/actuator/**").permitAll()
                 .antMatchers("/api/project/**").access("#oauth2.hasAnyScope('scaffold','scaffold_admin')")
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

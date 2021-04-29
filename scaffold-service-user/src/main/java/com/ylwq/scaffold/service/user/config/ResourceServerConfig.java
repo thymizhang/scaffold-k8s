@@ -71,7 +71,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         http
                 .authorizeRequests()
                 /* 放行测试接口和健康检查接口 */
-                .antMatchers("/api/user/3", "/actuator/health").permitAll()
+                .antMatchers("/api/user/3", "/actuator/**").permitAll()
                 .antMatchers("/api/user/**").access("#oauth2.hasAnyScope('scaffold','scaffold_admin')")
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
