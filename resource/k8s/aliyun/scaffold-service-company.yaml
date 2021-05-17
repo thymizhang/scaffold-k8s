@@ -28,6 +28,12 @@ spec:
               port: 8083
             initialDelaySeconds: 30 #等待30秒开始检查
             periodSeconds: 60 #每60秒检查一次
+          resources:
+            requests: #请求资源下限
+              cpu: "100m"
+              memory: "128Mi"
+            limits:  #资源上限, 大于等于requests
+              memory: "512Mi"
 ---
 #如果使用k8s的服务发现机制，需要配置下面的service
 #apiVersion: v1

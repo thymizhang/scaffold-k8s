@@ -5,7 +5,7 @@ metadata:
   labels:
     app: scaffold-service-project
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: scaffold-service-project
@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
         - name: scaffold-service-project
-          image: registry.cn-hangzhou.aliyuncs.com/thymizhang/scaffold-service-project:1.0.0
-          imagePullPolicy: IfNotPresent
+          image: registry.cn-shenzhen.aliyuncs.com/thymizhang/scaffold-service-project:1.0.0
+          imagePullPolicy: Always #每次都重新拉取镜像
           readinessProbe: #就绪探针
             httpGet:
               path: /actuator/health #需要依赖spring-boot-starter-actuator
@@ -29,6 +29,7 @@ spec:
             initialDelaySeconds: 30 #等待30秒开始检查
             periodSeconds: 60 #每60秒检查一次
 ---
+#如果使用k8s的服务发现机制，需要配置下面的service
 #apiVersion: v1
 #kind: Service
 #metadata:

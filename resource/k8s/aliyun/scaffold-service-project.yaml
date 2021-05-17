@@ -1,48 +1,54 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: scaffold-service-company
+  name: scaffold-service-project
   labels:
-    app: scaffold-service-company
+    app: scaffold-service-project
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: scaffold-service-company
+      app: scaffold-service-project
   template:
     metadata:
       labels:
-        app: scaffold-service-company
+        app: scaffold-service-project
     spec:
       containers:
-        - name: scaffold-service-company
-          image: registry.cn-shenzhen.aliyuncs.com/thymizhang/scaffold-service-company:1.0.0
+        - name: scaffold-service-project
+          image: registry.cn-shenzhen.aliyuncs.com/thymizhang/scaffold-service-project:1.0.0
           imagePullPolicy: Always #每次都重新拉取镜像
           readinessProbe: #就绪探针
             httpGet:
               path: /actuator/health #需要依赖spring-boot-starter-actuator
-              port: 8083 #k8s内部端口
+              port: 8084 #k8s内部端口
             initialDelaySeconds: 10 #等待10秒开始检查
           livenessProbe: #存活探针
             tcpSocket:
-              port: 8083
+              port: 8084
             initialDelaySeconds: 30 #等待30秒开始检查
             periodSeconds: 60 #每60秒检查一次
+          resources:
+            requests: #请求资源下限
+              cpu: "100m"
+              memory: "128Mi"
+            limits:  #资源上限, 大于等于requests
+              memory: "512Mi"
 ---
 #如果使用k8s的服务发现机制，需要配置下面的service
 #apiVersion: v1
 #kind: Service
 #metadata:
-#  name: service-company
+#  name: service-project
 #  labels:
-#    app: service-company
+#    app: service-project
 #    group: scaffold
 #spec:
 #  ports:
 #    - name: http
-#      port: 8083
-#      targetPort: 8083  #pod的端口, 可以不填, 默认就是port的值
-#      nodePort: 31083 #对k8s集群暴露的端口
+#      port: 8084
+#      targetPort: 8084  #pod的端口, 可以不填, 默认就是port的值
+#      nodePort: 31084 #对k8s集群暴露的端口
 #  selector:
-#    app: scaffold-service-company #路由规则: 匹配pod中的labels标签
+#    app: scaffold-service-project #路由规则: 匹配pod中的labels标签
 #  type: NodePort

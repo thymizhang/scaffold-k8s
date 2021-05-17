@@ -23,6 +23,12 @@ spec:
               port: 9000
             initialDelaySeconds: 30 #等待30秒开始检查
             periodSeconds: 60 #每60秒检查一次
+          resources:
+            requests: #请求资源下限
+              cpu: "100m"
+              memory: "128Mi"
+            limits:  #资源上限, 大于等于requests
+              memory: "512Mi"
 ---
 apiVersion: v1
 kind: Service
@@ -31,12 +37,14 @@ metadata:
   labels:
     app: server-gateway
     group: scaffold
+  annotations:
+    service.beta.kubernetes.io/alibaba-cloud-loadbalancer-id: lb-wz9haqtf9f9ecs0u7zx9a  #绑定已有的SLB(负载均衡服务)
+    service.beta.kubernetes.io/alicloud-loadbalancer-force-override-listeners: 'true' #强制覆盖SLB之前的监听
 spec:
   ports:
     - name: http
       port: 9000
       targetPort: 9000  #pod的端口, 可以不填, 默认就是port的值
-      nodePort: 31000 #对k8s集群暴露的端口
   selector:
     app: scaffold-server-gateway #路由规则: 匹配pod中的labels标签
-  type: NodePort
+  type: LoadBalancer
