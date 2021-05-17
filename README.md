@@ -41,9 +41,9 @@
 
 1. JDK 11.0.8
 2. MySQL 8.0.21
-3. Redis 6.0.8
-4. RabbitMQ 3.8.14
-5. Nacos 2.0.0
+3. Redis 6.2.3
+4. RabbitMQ 3.8.16
+5. Nacos 2.0.1
 6. Sentinel 1.8.1
 
 * 命令行启动(windows环境下需要指定编码)
