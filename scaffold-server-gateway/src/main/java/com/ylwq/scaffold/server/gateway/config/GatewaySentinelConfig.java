@@ -230,7 +230,7 @@ public class GatewaySentinelConfig {
                 /* 限流模式：API分组，默认：RESOURCE_MODE_ROUTE_ID（路由id）*/
                 .setResourceMode(SentinelGatewayConstants.RESOURCE_MODE_CUSTOM_API_NAME)
                 /* 限流阈值 */
-                .setCount(2)
+                .setCount(10)
                 /* 统计时间窗口，单位：秒，默认：1秒 */
                 .setIntervalSec(15)
         );
