@@ -1,0 +1,58 @@
+server:
+  port: ${port:8080}
+
+---
+
+spring:
+  application:
+    name: server-security
+  main:
+    allow-bean-definition-overriding: true
+
+---
+
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: nacos.gceasy.cc:8848
+        namespace: SCAFFOLD-DEV
+
+---
+
+spring:
+  datasource:
+    url: jdbc:mysql://mysqlmaster.gceasy.cc:3306/scaffold_oauth2?useSSL=false&serverTimezone=Hongkong&useUnicode=true&characterEncoding=UTF-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: test2020
+
+---
+
+spring:
+  redis:
+    database: 0
+    host: redis.gceasy.cc
+    port: 6379 #默认6379，可省略
+    timeout: 30000  # 连接超时时长（毫秒）
+    lettuce:
+      pool: # 注意: 使用连接池需要加入commons-pool2依赖
+        max-active: 1000  # 连接池最大连接数（使用负值表示没有限制）
+        max-idle: 10    # 连接池中的最大空闲连接
+        min-idle: 5     # 连接池中的最小空闲连接
+        max-wait: -1   # 连接池最大阻塞等待时间（使用负值表示没有限制）
+
+---
+
+springfox:
+  documentation:
+    swagger-ui:
+      enabled: false # 关闭swagger在线文档
+
+---
+
+service:
+  user:
+    provider:
+      name: service-user  # 微服务调用名称
+      url:                # 微服务调用地址，使用nacos时不填写

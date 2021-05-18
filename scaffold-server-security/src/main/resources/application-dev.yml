@@ -55,4 +55,4 @@ service:
   user:
     provider:
       name: service-user  # 微服务调用名称
-      url:                # 微服务调用地址
+      url:                # 微服务调用地址，使用nacos时不填写
