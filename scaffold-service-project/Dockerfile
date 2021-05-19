@@ -17,4 +17,5 @@ COPY --from=builder application/dependencies/ ./
 COPY --from=builder application/spring-boot-loader/ ./
 COPY --from=builder application/snapshot-dependencies/ ./
 COPY --from=builder application/application/ ./
-ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]
+# 微服务运行脚本，开发、测试、生产环境参数SPRING_PROFILES_ACTIVE：dev test prod
+ENTRYPOINT ["java","-Dspring.profiles.active=${SPRING_PROFILES_ACTIVE}","org.springframework.boot.loader.JarLauncher"]
