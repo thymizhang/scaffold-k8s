@@ -76,4 +76,10 @@ spring:
 springfox:
   documentation:
     swagger-ui:
-      enabled: false     # 开启swagger3文档显示
+      enabled: true     # 开启swagger3文档显示
+
+---
+
+logging:
+  level:
+    root: warn # 日志输出级别，默认级别：info

@@ -47,7 +47,13 @@ spring:
 springfox:
   documentation:
     swagger-ui:
-      enabled: false # 关闭swagger在线文档
+      enabled: true # 关闭swagger在线文档
+
+---
+
+logging:
+  level:
+    root: warn # 日志输出级别，默认级别：info
 
 ---
 

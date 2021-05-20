@@ -51,6 +51,12 @@ springfox:
 
 ---
 
+logging:
+  level:
+    root: error # 日志输出级别，默认级别：info
+
+---
+
 service:
   user:
     provider:
