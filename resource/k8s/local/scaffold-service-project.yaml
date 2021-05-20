@@ -5,7 +5,7 @@ metadata:
   labels:
     app: scaffold-service-project
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: scaffold-service-project
@@ -18,6 +18,9 @@ spec:
         - name: scaffold-service-project
           image: registry.cn-shenzhen.aliyuncs.com/thymizhang/scaffold-service-project:1.0.0
           imagePullPolicy: Always #每次都重新拉取镜像
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: dev
           readinessProbe: #就绪探针
             httpGet:
               path: /actuator/health #需要依赖spring-boot-starter-actuator

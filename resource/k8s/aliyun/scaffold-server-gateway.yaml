@@ -18,6 +18,11 @@ spec:
         - name: scaffold-server-gateway
           image: registry.cn-shenzhen.aliyuncs.com/thymizhang/scaffold-server-gateway:1.0.0
           imagePullPolicy: Always #每次都重新拉取镜像
+          env:
+            - name: aliyun_logs_scaffold-server-gateway-stdout #阿里云日志服务采集配置，创建一个名为scaffold-server-gateway-stdout的logstore
+              value: stdout  #将stdout作为采集路径
+            - name: SPRING_PROFILES_ACTIVE #多环境配置参数
+              value: test
           livenessProbe: #存活探针
             tcpSocket:
               port: 9000

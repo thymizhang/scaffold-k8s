@@ -21,6 +21,8 @@ spec:
           env:
             - name: aliyun_logs_scaffold-service-user-stdout #阿里云日志服务采集配置，创建一个名为scaffold-service-user-stdout的logstore
               value: stdout  #将stdout作为采集路径
+            - name: SPRING_PROFILES_ACTIVE #多环境配置参数
+              value: test
           readinessProbe: #就绪探针
             httpGet:
               path: /actuator/health #需要依赖spring-boot-starter-actuator
