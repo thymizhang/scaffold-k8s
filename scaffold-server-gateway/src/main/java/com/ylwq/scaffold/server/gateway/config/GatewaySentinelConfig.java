@@ -122,7 +122,7 @@ public class GatewaySentinelConfig {
         /* 添加面向API分组的限流规则 */
         Set<GatewayFlowRule> gatewayRulesForApis = getGatewayRulesForApis();
         for (GatewayFlowRule rule : gatewayRulesForApis) {
-            rules.add(rule);
+            //rules.add(rule);
         }
         /* 加载限流规则 */
         GatewayRuleManager.loadRules(rules);
@@ -140,9 +140,9 @@ public class GatewaySentinelConfig {
                 /* 限流资源模式：路由id */
                 .setResourceMode(SentinelGatewayConstants.RESOURCE_MODE_ROUTE_ID)
                 /* 限流阈值 */
-                .setCount(4)
+                .setCount(10000)
                 /* 统计时间窗口，单位：秒，默认：1秒 */
-                .setIntervalSec(30)
+                .setIntervalSec(60)
         );
         log.info("sentinel：面向路由的限流规则已加载");
         return rules;
@@ -164,9 +164,9 @@ public class GatewaySentinelConfig {
                     /* 限流资源模式：路由id */
                     .setResourceMode(SentinelGatewayConstants.RESOURCE_MODE_ROUTE_ID)
                     /* 限流阈值 */
-                    .setCount(10)
+                    .setCount(20000)
                     /* 统计时间窗口，单位：秒，默认：1秒 */
-                    .setIntervalSec(30)
+                    .setIntervalSec(60)
                     /* 对ip限流 */
                     .setParamItem(new GatewayParamFlowItem()
                             .setParseStrategy(SentinelGatewayConstants.PARAM_PARSE_STRATEGY_CLIENT_IP)
@@ -237,14 +237,14 @@ public class GatewaySentinelConfig {
         /* 以客户端IP作为限流因子 */
         rules.add(new GatewayFlowRule("customized_api2")
                 .setResourceMode(SentinelGatewayConstants.RESOURCE_MODE_CUSTOM_API_NAME)
-                .setCount(2)
-                .setIntervalSec(15)
+                .setCount(60)
+                .setIntervalSec(60)
                 .setParamItem(new GatewayParamFlowItem().setParseStrategy(SentinelGatewayConstants.PARAM_PARSE_STRATEGY_CLIENT_IP))
         );
         rules.add(new GatewayFlowRule("customized_api3")
                 .setResourceMode(SentinelGatewayConstants.RESOURCE_MODE_CUSTOM_API_NAME)
-                .setCount(2)
-                .setIntervalSec(15)
+                .setCount(60)
+                .setIntervalSec(60)
                 /* 以客户端请求参数作为限流因子，不设置ParamItem，默认为url限流 */
                 .setParamItem(new GatewayParamFlowItem()
                         .setParseStrategy(SentinelGatewayConstants.PARAM_PARSE_STRATEGY_URL_PARAM)
