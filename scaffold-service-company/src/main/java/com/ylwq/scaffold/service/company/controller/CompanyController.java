@@ -58,20 +58,20 @@ public class CompanyController {
     })
     @SuppressWarnings("unchecked")
     @GetMapping("/{companyId}")
-    @PreAuthorize("hasAnyAuthority('test','user')")
+    @PreAuthorize("hasAnyAuthority('test','user','admin')")
     public ResponseData<CompanyInfoDto> getCompany(@PathVariable(value = "companyId") String companyId) {
         CompanyInfoDto company = companyRestApi.getCompany(companyId);
         return ResponseDataUtil.buildSuccess(company);
     }
 
     @GetMapping("/principal")
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseData getPrincipal(Principal principal){
         return ResponseDataUtil.buildSuccess(principal);
     }
 
     @GetMapping("/user")
-    @Secured("ROLE_ADMIN")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseData getUser(Authentication authentication){
         return ResponseDataUtil.buildSuccess(authentication.getPrincipal());
     }
