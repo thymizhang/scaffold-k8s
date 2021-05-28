@@ -124,12 +124,6 @@ kubectl scale deployment coredns -n kube-system --replicas=2
 参考：https://blog.csdn.net/yangchao1125/article/details/103180832  
 
 
-### 待办
-1. 日志采集  
-2. 压力测试  
-3. 环境配置（dev test prod）  
-
-
 ### 问题
 * k8s容器时间和宿主机时间相差8小时  
 > 
